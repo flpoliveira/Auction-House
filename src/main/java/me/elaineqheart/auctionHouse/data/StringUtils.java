@@ -103,7 +103,9 @@ public class StringUtils {
 
     public static double parsePositiveNumber(String input) {
         try{
-            return Math.max(Integer.parseInt(input), 0);
+            double price = Math.max(Double.parseDouble(input), 0);
+            if(price % 1 != 0) throw new RuntimeException();
+            return price;
         } catch (Exception e) {
             try{
                 double price = Double.parseDouble(input.substring(0, input.length()-1));

@@ -134,7 +134,7 @@ public class CollectSoldItemGUI extends InventoryGUI {
     }
 
     private static double getProfit(double price) {
-        return (double) ((int) (price * 100 * (1 - SettingManager.taxRate))) /100;
+        return Math.floor((price * 100 * (1 - SettingManager.taxRate))) / 100;
     }
 
 }

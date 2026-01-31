@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 public class Messages {
@@ -81,8 +82,8 @@ public class Messages {
     public static List<String> getLoreList(String key, String... replacements) {
         String message = getValue(key,false);
         message = replacePlaceholders(key, message, replacements);
-        List<String> list = List.of(message.split("&n"));
-        list.forEach(Messages::adventureApi);
+        List<String> list = Arrays.asList(message.split("&n"));
+        list.replaceAll(Messages::adventureApi);
         return list;
     }
     public static List<String> getLoreList(String key, double price, String... replacements) {
@@ -90,8 +91,8 @@ public class Messages {
         message = replacePlaceholders(key, message, replacements);
         message = message.replace("%price%", StringUtils.formatPrice(price));
         message = message.replace("%number%", StringUtils.formatNumber(price));
-        List<String> list = List.of(message.split("&n"));
-        list.forEach(Messages::adventureApi);
+        List<String> list = Arrays.asList(message.split("&n"));
+        list.replaceAll(Messages::adventureApi);
         return list;
     }
 

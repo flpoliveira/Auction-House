@@ -2,6 +2,7 @@ package me.elaineqheart.auctionHouse.data.ram;
 
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
 import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.Blacklist;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -94,7 +95,8 @@ public class AuctionHouseStorage {
         return itemNotes.stream().map(notes::get).toList(); //keep order
     }
 
-    public static List<ItemNote> getSortedList(ItemNoteStorage.SortMode mode, String search, AhConfiguration.BINFilter binFilter){
+    public static List<ItemNote> getSortedList(ItemNoteStorage.SortMode mode, AhConfiguration c){
+        String search = c.getCurrentSearch();
         List<UUID> list = new ArrayList<>();
         switch (mode) {
             case DATE -> list = sortedTimeLeft;
@@ -105,9 +107,8 @@ public class AuctionHouseStorage {
         return list.stream()
                 .map(notes::get)
                 .filter(note -> note.isOnAuction() && !note.isExpired() && !note.isOnWaitingList())
-                .filter(note -> search.isEmpty() || Arrays.stream(note.getSearchIndex())
-                        .anyMatch(s -> s.contains(search.toLowerCase())))
-                .filter(note -> switch (binFilter) {
+                .filter(note -> search.isEmpty() || note.getSearchIndex(c.getPlayer()).contains(search.toLowerCase()))
+                .filter(note -> switch (c.getBinFilter()) {
                     case ALL -> true;
                     case AUCTIONS_ONLY -> note.isBIDAuction();
                     case BIN_ONLY ->  !note.isBIDAuction();

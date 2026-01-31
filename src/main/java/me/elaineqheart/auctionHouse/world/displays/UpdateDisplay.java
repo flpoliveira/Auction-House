@@ -243,9 +243,9 @@ public class UpdateDisplay implements Runnable{
 
     public static ItemNote getNote(String type, int rank) {
         if(type.equals("highest_price")) {
-            return AuctionHouseStorage.getSortedList(ItemNoteStorage.SortMode.PRICE_DESC, "", AhConfiguration.BINFilter.ALL).stream().skip(rank-1).findFirst().orElse(null);
+            return AuctionHouseStorage.getSortedList(ItemNoteStorage.SortMode.PRICE_DESC, new AhConfiguration()).stream().skip(rank-1).findFirst().orElse(null);
         } else if (type.equals("ending_soon")) {
-            return AuctionHouseStorage.getSortedList(ItemNoteStorage.SortMode.DATE, "", AhConfiguration.BINFilter.ALL).stream().skip(rank-1).findFirst().orElse(null);
+            return AuctionHouseStorage.getSortedList(ItemNoteStorage.SortMode.DATE, new AhConfiguration()).stream().skip(rank-1).findFirst().orElse(null);
         }
         return null;
     }

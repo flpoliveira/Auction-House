@@ -1,15 +1,24 @@
 package me.elaineqheart.auctionHouse.data.ram;
 
+import de.unpixelt.locale.Locale;
+import de.unpixelt.locale.Translate;
+import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemStackConverter;
 import me.elaineqheart.auctionHouse.data.persistentStorage.yml.Permissions;
 import me.elaineqheart.auctionHouse.data.persistentStorage.yml.SettingManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.ShulkerBox;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +39,7 @@ public class ItemNote {
     private String itemName;
     private final boolean isBIDAuction;
     private List<Bid> bidHistory = new ArrayList<>();
-    private Set<UUID> claimedPlayers = new HashSet<>(); 
+    private Set<UUID> claimedPlayers = new HashSet<>();
 
     public ItemNote(Player player, ItemStack item, double price, boolean isBINAuction) {
         this.noteID = UUID.randomUUID();
@@ -74,16 +83,47 @@ public class ItemNote {
         return partiallySoldAmountLeft == 0 ? getItem().getAmount() : partiallySoldAmountLeft;
     }
 
-    public String[] getSearchIndex() {
+    public String getSearchIndex(Player p) {
         ItemStack item = getItem();
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> index = new ArrayList<>(Collections.singleton(item.toString().toLowerCase()));
-        if(meta != null && ItemManager.isShulkerBox(item)) {
-            for (ItemStack itemStack : ((ShulkerBox) ((BlockStateMeta) meta).getBlockState()).getInventory().getContents()) {
-                if(itemStack != null) index.add(itemStack.toString().toLowerCase());
+        if(AuctionHouse.localeAPI) {
+            List<ItemStack> translateItems = new ArrayList<>(List.of(item));
+            if(meta != null) {
+                if (meta instanceof BundleMeta bundleMeta) translateItems.addAll(bundleMeta.getItems());
+                if (ItemManager.isShulkerBox(item)) Collections.addAll(translateItems, ((ShulkerBox) ((BlockStateMeta) meta).getBlockState()).getInventory().getContents());
+            }
+
+            for (ItemStack translateItem : translateItems) {
+                if (translateItem == null) continue;
+                index.add(Translate.getMaterial(p, translateItem.getType()).toLowerCase());
+                ItemMeta translateMeta = item.getItemMeta();
+                if (translateMeta == null) continue;
+                for (Enchantment enchantment : translateMeta.getEnchants().keySet()) {
+                    String translatedEnchantment = Translate.getEnchantment(p, enchantment);
+                    if (translatedEnchantment != null) index.add(translatedEnchantment.toLowerCase());
+                }
+                if (translateMeta instanceof PotionMeta potionMeta) {
+                    PotionType type = potionMeta.getBasePotionType();
+                    if(type == null) continue;
+                    String translatedPotion = Translate.getPotion(p, type, getPotionSort(translateItem));
+                    if (translatedPotion != null) index.add(translatedPotion.toLowerCase());
+                }
             }
         }
-        return index.toArray(String[]::new);
+        return index.toString();
+    }
+
+    private static Translate.@NotNull PotionSort getPotionSort(ItemStack translateItem) {
+        Translate.PotionSort sort;
+        switch (translateItem.getType()) {
+            case POTION -> sort = Translate.PotionSort.POTION;
+            case LINGERING_POTION -> sort = Translate.PotionSort.LINGERING_POTION;
+            case SPLASH_POTION -> sort = Translate.PotionSort.SPLASH_POTION;
+            default -> throw new IllegalStateException("Unexpected potion " +
+                    "value: " + translateItem.getType());
+        }
+        return sort;
     }
 
     //Getters and Setters

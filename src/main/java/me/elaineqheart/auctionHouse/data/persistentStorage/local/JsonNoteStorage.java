@@ -1,8 +1,8 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.json;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local;
 
 import com.google.gson.Gson;
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.ConfigManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import org.bukkit.entity.Player;

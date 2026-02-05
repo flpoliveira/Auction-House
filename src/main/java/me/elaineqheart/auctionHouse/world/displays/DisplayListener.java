@@ -3,7 +3,7 @@ package me.elaineqheart.auctionHouse.world.displays;
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.impl.AuctionHouseGUI;
 import me.elaineqheart.auctionHouse.GUI.impl.AuctionViewGUI;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import org.bukkit.*;

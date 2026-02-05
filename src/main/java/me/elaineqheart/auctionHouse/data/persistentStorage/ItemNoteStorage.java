@@ -1,6 +1,6 @@
 package me.elaineqheart.auctionHouse.data.persistentStorage;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.json.JsonNoteStorage;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.JsonNoteStorage;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import org.bukkit.entity.Player;

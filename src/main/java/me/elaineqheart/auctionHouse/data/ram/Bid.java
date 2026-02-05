@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.data.ram;
 
 import me.elaineqheart.auctionHouse.data.StringUtils;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import org.bukkit.entity.Player;
 
 import java.util.Date;

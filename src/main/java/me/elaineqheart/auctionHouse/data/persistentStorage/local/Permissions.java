@@ -1,6 +1,6 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.yml;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.ConfigManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

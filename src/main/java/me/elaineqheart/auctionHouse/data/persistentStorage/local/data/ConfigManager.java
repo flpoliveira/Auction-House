@@ -1,7 +1,7 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.yml.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.OldLayout;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.OldLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -22,19 +22,18 @@ public class ConfigManager {
 
     public static void setupConfigs() {
         AuctionHouse.getPlugin().reloadConfig();
-        displays.setup("displays", false, "/data");
+        displays.setup("displays.yml", false, "/data");
         displaysBackwardsCompatibility();
-        bannedPlayers.setup("bannedPlayers", false, "/data");
-        permissions.setup("permissions", true, "");
-        blacklist.setup("blacklist", false, "/data");
-        categories.setup("categories", false, "/data");
-        playerPreferences.setup("playerPreferences", false, "/data");
+        bannedPlayers.setup("bannedPlayers.yml", false, "/data");
+        permissions.setup("permissions.yml", true, "");
+        blacklist.setup("blacklist.yml", false, "/data");
+        categories.setup("categories.yml", false, "/data");
+        playerPreferences.setup("playerPreferences.yml", false, "/data");
         //compatibility to version 1.21.4
         if(!oldVersion21()) {
-            layout.setup("layout", true, "");
+            layout.setup("layout.yml", true, "");
         } else {
-            layout.setup("layout", false, "");
-
+            layout.setup("layout.yml", false, "");
             if (!layout.get().getBoolean("old-layout")) OldLayout.saveOldLayout();
         }
         permissionsSetup();

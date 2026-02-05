@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.GUI.other;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import org.bukkit.Bukkit;

@@ -2,8 +2,8 @@ package me.elaineqheart.auctionHouse.listeners;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.impl.CollectSoldItemGUI;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.Messages;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import org.bukkit.Bukkit;

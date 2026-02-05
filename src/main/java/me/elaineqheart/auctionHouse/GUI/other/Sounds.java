@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.GUI.other;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.SettingManager;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.ConfigManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

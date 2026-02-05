@@ -2,7 +2,7 @@ package me.elaineqheart.auctionHouse.data.ram;
 
 import me.elaineqheart.auctionHouse.GUI.impl.AuctionHouseGUI;
 import me.elaineqheart.auctionHouse.GUI.impl.MyAuctionsGUI;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.ConfigManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

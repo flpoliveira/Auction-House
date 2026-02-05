@@ -1,4 +1,4 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.yml.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import com.google.common.base.Charsets;
 import me.elaineqheart.auctionHouse.AuctionHouse;
@@ -19,7 +19,7 @@ public class Config {
 
     public void setup(String fileName, boolean copyDefaults, String parent){
         if(ConfigManager.backwardsCompatibility() && !parent.isEmpty()) backwardsCompatibility(fileName, parent);
-        file = new File(AuctionHouse.getPlugin().getDataFolder() + parent,  fileName + ".yml");
+        file = new File(AuctionHouse.getPlugin().getDataFolder() + parent,  fileName);
 
         if (!file.exists()){
             try{

@@ -1,4 +1,4 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.yml.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

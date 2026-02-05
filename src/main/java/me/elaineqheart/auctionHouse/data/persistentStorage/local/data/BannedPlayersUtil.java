@@ -1,4 +1,4 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.yml.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import org.bukkit.ChatColor;

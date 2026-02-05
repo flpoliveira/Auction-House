@@ -1,8 +1,7 @@
 package me.elaineqheart.auctionHouse.data.ram;
 
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.yml.data.Blacklist;
-import org.bukkit.entity.Player;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Blacklist;
 
 import java.util.*;
 import java.util.stream.Collectors;

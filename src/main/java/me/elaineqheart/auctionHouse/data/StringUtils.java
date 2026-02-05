@@ -1,6 +1,6 @@
 package me.elaineqheart.auctionHouse.data;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -68,27 +68,27 @@ public class StringUtils {
     }
 
     public static String formatNumber(double number) {
-        return Messages.getFormatted("placeholders.number", "%input%", formatNumberPlain(number));
+        return M.getFormatted("placeholders.number", "%input%", formatNumberPlain(number));
     }
     public static String formatNumberPlain(double number) {
         // fallback for async threads
         DecimalFormat fmt = Objects.requireNonNullElseGet(SettingManager.formatter, () ->
-                new DecimalFormat(Messages.getFormatted("placeholders.format-numbers")));
+                new DecimalFormat(M.getFormatted("placeholders.format-numbers")));
         return fmt.format(number);
     }
     public static String formatNumber(String number) {
-        return Messages.getFormatted("placeholders.number", "%input%", number);
+        return M.getFormatted("placeholders.number", "%input%", number);
     }
 
     public static String formatPrice(double price) {
-        return Messages.getFormatted("placeholders.price",
+        return M.getFormatted("placeholders.price",
                 "%number%", formatNumber(price),
-                "%currency-symbol%", Messages.getFormatted("placeholders.currency-symbol"));
+                "%currency-symbol%", M.getFormatted("placeholders.currency-symbol"));
     }
     public static String formatPrice(String price) {
-        return Messages.getFormatted("placeholders.price",
+        return M.getFormatted("placeholders.price",
                 "%number%", formatNumber(price),
-                "%currency-symbol%", Messages.getFormatted("placeholders.currency-symbol"));
+                "%currency-symbol%", M.getFormatted("placeholders.currency-symbol"));
     }
 
     public static String getItemName(ItemStack item) {

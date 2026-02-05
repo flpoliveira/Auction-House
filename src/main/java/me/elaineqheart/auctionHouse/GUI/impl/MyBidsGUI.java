@@ -5,9 +5,8 @@ import me.elaineqheart.auctionHouse.GUI.InventoryButton;
 import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Layout;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Permissions;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
@@ -43,7 +42,7 @@ public class MyBidsGUI extends InventoryGUI implements Runnable {
             case 1 -> 4;
             case 2 -> 5;
             default -> 6;
-        }, Messages.getFormatted("inventory-titles.my-bids")));
+        }, M.getFormatted("inventory-titles.my-bids")));
         this.c = c;
         this.c.setView(AhConfiguration.View.MY_BIDS);
         this.page = page;
@@ -83,7 +82,7 @@ public class MyBidsGUI extends InventoryGUI implements Runnable {
         for(int i = 0; i < screenSize; ++i){
             int j = itemSlots.get(i);
             if(size-1<i) {
-                if (Permissions.getAuctionSlots(c.getPlayer()) <= i) continue;
+                if (ConfigManager.permissions.getAuctionSlots(c.getPlayer()) <= i) continue;
                 this.addButton(j, new InventoryButton()
                         .creator(player -> null)
                         .consumer(event -> {}));
@@ -168,11 +167,11 @@ public class MyBidsGUI extends InventoryGUI implements Runnable {
 
     private InventoryButton nextPage(){
         int pages = (noteSize-1)/screenSize;
-        ItemStack item = Layout.getItem("n");
+        ItemStack item = ConfigManager.layout.getItem("n");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.next-page.name"));
-        meta.setLore(Messages.getLoreList("items.next-page.lore",
+        meta.setItemName(M.getFormatted("items.next-page.name"));
+        meta.setLore(M.getLoreList("items.next-page.lore",
                 "%page%", String.valueOf(page+1),
                 "%pages%", String.valueOf(pages+1)));
         item.setItemMeta(meta);
@@ -186,11 +185,11 @@ public class MyBidsGUI extends InventoryGUI implements Runnable {
                 });
     }
     private InventoryButton previousPage(){
-        ItemStack item = Layout.getItem("p");
+        ItemStack item = ConfigManager.layout.getItem("p");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.previous-page.name"));
-        meta.setLore(Messages.getLoreList("items.previous-page.lore",
+        meta.setItemName(M.getFormatted("items.previous-page.name"));
+        meta.setLore(M.getLoreList("items.previous-page.lore",
                 "%page%", String.valueOf(page+1),
                 "%pages%", String.valueOf((noteSize-1)/screenSize+1)));
         item.setItemMeta(meta);

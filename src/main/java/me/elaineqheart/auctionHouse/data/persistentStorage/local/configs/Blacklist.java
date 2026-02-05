@@ -1,5 +1,7 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.configs;
 
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Config;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Blacklist {
+public class Blacklist extends Config {
 
     //ah blacklist add <exact/material/name_contains/contains_lore> <rule_name>
     //ah blacklist remove <rule_name>
@@ -17,7 +19,7 @@ public class Blacklist {
     // <name> = id
 
     public static boolean isBlacklisted(ItemStack item) {
-        return isBlacklisted(item, getData());
+        return isBlacklisted(item, ConfigManager.blacklist.getData());
     }
     public static boolean isBlacklisted(ItemStack item, List<Map<?, ?>> blacklist) {
         boolean blacklisted = false;
@@ -68,29 +70,29 @@ public class Blacklist {
         return meta.getCustomModelDataComponent().getStrings().stream().anyMatch(s -> s.equals(key));
     }
 
-    public static void addExact(ItemStack item) {
+    public void addExact(ItemStack item) {
         add("exact", item);
     }
-    public static void addMaterial(String material) {
+    public void addMaterial(String material) {
         add("material", material);
     }
-    public static void addLoreContains(String lore) {
+    public void addLoreContains(String lore) {
         add("lore", lore);
     }
-    public static void addNameContains(String itemName) {
+    public void addNameContains(String itemName) {
         add("name", itemName);
     }
-    public static void addItemModel(String model) {
+    public void addItemModel(String model) {
         add("item_model", model);
     }
-    public static void addCustomModelData(String model) {
+    public void addCustomModelData(String model) {
         add("custom_model_data", model);
     }
-    public static void addAll() {
+    public void addAll() {
         add("all", "0");
     }
 
-    private static void add(String type, Object object) {
+    private void add(String type, Object object) {
         List<Map<?, ?>> blacklist = getData();
         Map<String, Object> entry = new HashMap<>();
         entry.put("type", type);
@@ -99,7 +101,7 @@ public class Blacklist {
         save(blacklist);
     }
 
-    public static boolean undo() {
+    public boolean undo() {
         List<Map<?, ?>> blacklist = getData();
         if(!blacklist.isEmpty()) {
             blacklist.removeLast();
@@ -109,18 +111,18 @@ public class Blacklist {
         return false;
     }
 
-    private static List<Map<?, ?>> getData() {
-        List<Map<?, ?>> blacklist = ConfigManager.blacklist.get().getMapList("blacklist");
+    private List<Map<?, ?>> getData() {
+        List<Map<?, ?>> blacklist = getCustomFile().getMapList("blacklist");
         if(blacklist.isEmpty()) {
             blacklist = new ArrayList<>();
             save(blacklist);
         }
         return blacklist;
     }
-    private static void save(List<Map<?, ?>> blacklist) {
-        ConfigManager.blacklist.get().set("blacklist", blacklist);
-        ConfigManager.blacklist.save();
-        ConfigManager.blacklist.reload();
+    private void save(List<Map<?, ?>> blacklist) {
+        getCustomFile().set("blacklist", blacklist);
+        save();
+        reload();
     }
 
 }

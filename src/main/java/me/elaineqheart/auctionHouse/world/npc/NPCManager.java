@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.world.npc;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -46,7 +46,7 @@ public class NPCManager {
         npc.setVillagerType(Villager.Type.JUNGLE);
         npc.setAdult();
         npc.setCanPickupItems(false);
-        npc.setCustomName(Messages.getFormatted("world.npc"));
+        npc.setCustomName(M.getFormatted("world.npc"));
         npc.setCustomNameVisible(true);
         npc.setCollidable(false);
         npc.setGravity(false);

@@ -5,7 +5,7 @@ import me.elaineqheart.auctionHouse.GUI.InventoryButton;
 import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
@@ -33,7 +33,7 @@ public class AdminConfirmGUI extends InventoryGUI{
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,3*9,Messages.getFormatted("inventory-titles.admin-confirm-gui"));
+        return Bukkit.createInventory(null,3*9, M.getFormatted("inventory-titles.admin-confirm-gui"));
     }
 
     @Override
@@ -88,12 +88,12 @@ public class AdminConfirmGUI extends InventoryGUI{
                     Player p = (Player) event.getWhoClicked();
                     ItemNote test = AuctionHouseStorage.getNote(note.getNoteID());
                     if (test == null) {
-                        p.sendMessage(Messages.getFormatted("chat.non-existent"));
+                        p.sendMessage(M.getFormatted("chat.non-existent"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     if (!test.isOnAuction() || test.getCurrentAmount() < note.getCurrentAmount()) {
-                        p.sendMessage(Messages.getFormatted("chat.already-sold"));
+                        p.sendMessage(M.getFormatted("chat.already-sold"));
                         Sounds.villagerDeny(event);
                         return;
                     }
@@ -107,7 +107,7 @@ public class AdminConfirmGUI extends InventoryGUI{
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    p.sendMessage(Messages.getFormatted("chat.admin-expire-auction", "%reason%", reason));
+                    p.sendMessage(M.getFormatted("chat.admin-expire-auction", "%reason%", reason));
                 });
     }
     private InventoryButton confirmDeleteItem() {
@@ -117,19 +117,19 @@ public class AdminConfirmGUI extends InventoryGUI{
                     Player p = (Player) event.getWhoClicked();
                     //check if inventory is full
                     if(p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage(Messages.getFormatted("chat.inventory-full"));
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     //check if the item hasn't been sold yet
                     ItemNote test = AuctionHouseStorage.getNote(note.getNoteID());
                     if (test == null) {
-                        p.sendMessage(Messages.getFormatted("chat.non-existent"));
+                        p.sendMessage(M.getFormatted("chat.non-existent"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     if (!test.isOnAuction() || test.getCurrentAmount() < note.getItem().getAmount()) {
-                        p.sendMessage(Messages.getFormatted("chat.already-sold"));
+                        p.sendMessage(M.getFormatted("chat.already-sold"));
                         Sounds.villagerDeny(event);
                         return;
                     }
@@ -145,7 +145,7 @@ public class AdminConfirmGUI extends InventoryGUI{
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    p.sendMessage(Messages.getFormatted("chat.admin-delete-auction","%reason%", reason));
+                    p.sendMessage(M.getFormatted("chat.admin-delete-auction","%reason%", reason));
                 });
     }
     private InventoryButton cancel(){

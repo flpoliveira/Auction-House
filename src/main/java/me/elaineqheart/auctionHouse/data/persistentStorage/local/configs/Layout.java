@@ -1,31 +1,30 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.local;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.configs;
 
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Config;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Layout {
+public class Layout extends Config {
 
-    public static List<String> ahLayout;
-    public static List<String> myAhLayout;
+    public List<String> ahLayout;
+    public List<String> myAhLayout;
 
-    static {
-        loadData();
-    }
-
-    public static void loadData() {
-        FileConfiguration l = ConfigManager.layout.get();
+    @Override
+    public void setup() {
+        FileConfiguration l = ConfigManager.layout.getCustomFile();
         ahLayout = l.getStringList("ah-layout");
         myAhLayout = l.getStringList("my-ah-layout");
         if(ahLayout.isEmpty() || myAhLayout.isEmpty()) updateLayout(l);
     }
 
-    private static void updateLayout(FileConfiguration l) {
+    private void updateLayout(FileConfiguration l) {
         l.set("ah-layout", Arrays.asList(
                 "# # # # # # # # #",
                 "# . . . . . . . #",
@@ -45,21 +44,22 @@ public class Layout {
         myAhLayout = l.getStringList("my-ah-layout");
     }
 
-    public static ItemStack getItem(String path) {
-        ItemStack item = ConfigManager.layout.get().getItemStack(path);
+    public ItemStack getItem(String path) {
+        ItemStack item = ConfigManager.layout.getCustomFile().getItemStack(path);
         if(item == null) {
             throw new RuntimeException("The provided item at " + path + " is not serializable.");
         }
         return Objects.requireNonNull(item).clone();
     }
 
-    public static void saveItem(ItemStack item) {
-        ConfigManager.layout.get().set("test", item);
+    public void saveItem(ItemStack item) {
+        ConfigManager.layout.getCustomFile().set("test", item);
         ConfigManager.layout.save();
     }
 
-    public static void reload() {
-        loadData();
+    @Override
+    public void reloadChild() {
+        setup();
         ItemManager.reload();
     }
 }

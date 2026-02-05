@@ -32,16 +32,23 @@ public class Config {
 
         if(!copyDefaults) {
             save();
+            setup();
             return;
         }
         final InputStream defConfigStream = AuctionHouse.getPlugin().getResource(parent + fileName + ".yml");
-        if (defConfigStream == null) return;
+        if (defConfigStream == null) {
+            setup();
+            return;
+        }
         customFile.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, Charsets.UTF_8)));
         customFile.options().copyDefaults(true);
         save();
+        setup();
     }
 
-    public FileConfiguration get(){
+    public void setup() {}
+
+    public FileConfiguration getCustomFile(){
         return customFile;
     }
 
@@ -59,7 +66,10 @@ public class Config {
 
     public void reload(){
         customFile = YamlConfiguration.loadConfiguration(file);
+        reloadChild();
     }
+
+    public void reloadChild() {}
 
     private void backwardsCompatibility(String fileName, String parent) {
         File file = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + parent + "/" + fileName + ".yml");

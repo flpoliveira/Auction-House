@@ -1,14 +1,15 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.local;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.configs;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Config;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-public class Permissions {
+public class Permissions extends Config {
 
-    public static int getAuctionSlots(Player player) {
+    public int getAuctionSlots(Player player) {
         int slots = SettingManager.defaultMaxAuctions;
-        ConfigurationSection section = ConfigManager.permissions.get().getConfigurationSection("auction-slots");
+        ConfigurationSection section = getCustomFile().getConfigurationSection("auction-slots");
         if (section == null) return slots;
         for (String key : section.getKeys(true)) {
             if (player.hasPermission(key)) {
@@ -19,9 +20,9 @@ public class Permissions {
         return slots;
     }
 
-    public static long getAuctionDuration(Player player, boolean BID) {
+    public long getAuctionDuration(Player player, boolean BID) {
         long duration = BID ? SettingManager.BIDAuctionDuration : SettingManager.BINAuctionDuration;
-        ConfigurationSection section = ConfigManager.permissions.get().getConfigurationSection(BID ? "bid-auction-duration" : "bin-auction-duration");
+        ConfigurationSection section = getCustomFile().getConfigurationSection(BID ? "bid-auction-duration" : "bin-auction-duration");
         if (section == null) return duration;
         for (String key : section.getKeys(true)) {
             if (player.hasPermission(key)) {

@@ -4,8 +4,8 @@ import de.unpixelt.locale.Translate;
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemStackConverter;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Permissions;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.enchantments.Enchantment;
@@ -39,7 +39,7 @@ public class ItemNote {
     private List<Bid> bidHistory = new ArrayList<>();
     private Set<UUID> claimedPlayers = new HashSet<>();
 
-    public ItemNote(Player player, ItemStack item, double price, boolean isBINAuction) {
+    public ItemNote(Player player, ItemStack item, double price, boolean isBIDAuction) {
         this.noteID = UUID.randomUUID();
         this.playerName = player.getDisplayName();
         this.buyerName = null;
@@ -48,9 +48,9 @@ public class ItemNote {
         this.itemData = ItemStackConverter.encode(item);
         this.price = price;
         this.isSold = false;
-        this.auctionTime = Permissions.getAuctionDuration(player, isBINAuction);
+        this.auctionTime = ConfigManager.permissions.getAuctionDuration(player, isBIDAuction);
         this.itemName = StringUtils.getItemName(item);
-        this.isBIDAuction = isBINAuction;
+        this.isBIDAuction = isBIDAuction;
     }
 
     public ItemStack getItem(){
@@ -58,7 +58,7 @@ public class ItemNote {
     }
     public long getTimeLeft(){
         // +30 seconds [auctionSetupTime] wait time until the item is up on auction
-        if(auctionTime == 0) auctionTime = Permissions.getAuctionDuration(Bukkit.getPlayer(playerUUID), isBIDAuction); //backwards compatibility
+        if(auctionTime == 0) auctionTime = ConfigManager.permissions.getAuctionDuration(Bukkit.getPlayer(playerUUID), isBIDAuction); //backwards compatibility
         return auctionTime + SettingManager.auctionSetupTime - (new Date().getTime() - dateCreated.getTime())/1000; // divided by 1000 to get seconds
     }
     public boolean isExpired(){
@@ -66,7 +66,7 @@ public class ItemNote {
     }
 
     public boolean isOnWaitingList() {
-        if(auctionTime == 0) auctionTime = Permissions.getAuctionDuration(Bukkit.getPlayer(playerUUID), isBIDAuction); //backwards compatibility
+        if(auctionTime == 0) auctionTime = ConfigManager.permissions.getAuctionDuration(Bukkit.getPlayer(playerUUID), isBIDAuction); //backwards compatibility
         return getTimeLeft() > auctionTime;
     }
 

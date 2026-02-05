@@ -7,8 +7,7 @@ import me.elaineqheart.auctionHouse.GUI.other.AnvilHandler;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Layout;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
@@ -66,12 +65,12 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,Layout.ahLayout.size()*9, Messages.getFormatted("inventory-titles.auction-house"));
+        return Bukkit.createInventory(null,ConfigManager.layout.ahLayout.size()*9, M.getFormatted("inventory-titles.auction-house"));
     }
 
     @Override
     public void decorate(Player player) {
-        fillOutPlaces(Layout.ahLayout);
+        fillOutPlaces(ConfigManager.layout.ahLayout);
         super.decorate(player);
     }
 
@@ -173,9 +172,9 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
                     case '.', ' ' -> {}
                     default -> {
                         String symbol = String.valueOf(places.get(i).charAt(j));
-                        this.addButton(slot, customButton(Layout.getItem(symbol),
+                        this.addButton(slot, customButton(ConfigManager.layout.getItem(symbol),
                             event -> {
-                            List<Map<?, ?>> whitelist = ConfigManager.categories.get().getMapList(symbol);
+                            List<Map<?, ?>> whitelist = ConfigManager.categories.getCustomFile().getMapList(symbol);
                                 if (!whitelist.isEmpty()) {
                                     c.setWhitelist(whitelist, symbol);
                                     Sounds.click(event);
@@ -216,11 +215,11 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
 
     private InventoryButton nextPage(){
         int pages = (noteSize-1)/screenSize;
-        ItemStack item = Layout.getItem("n");
+        ItemStack item = ConfigManager.layout.getItem("n");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.next-page.name"));
-        meta.setLore(Messages.getLoreList("items.next-page.lore",
+        meta.setItemName(M.getFormatted("items.next-page.name"));
+        meta.setLore(M.getLoreList("items.next-page.lore",
                 "%page%", String.valueOf(c.getCurrentPage()+1),
                 "%pages%", String.valueOf(pages+1)));
 
@@ -235,11 +234,11 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
                 });
     }
     private InventoryButton previousPage(){
-        ItemStack item = Layout.getItem("p");
+        ItemStack item = ConfigManager.layout.getItem("p");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.previous-page.name"));
-        meta.setLore(Messages.getLoreList("items.previous-page.lore",
+        meta.setItemName(M.getFormatted("items.previous-page.name"));
+        meta.setLore(M.getLoreList("items.previous-page.lore",
                 "%page%", String.valueOf(c.getCurrentPage()+1),
                 "%pages%", String.valueOf((noteSize-1)/screenSize+1)));
         item.setItemMeta(meta);
@@ -253,11 +252,11 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
                 });
     }
     private InventoryButton searchOption(){
-        ItemStack item = c.getCurrentSearch().isEmpty() ? Layout.getItem("s") : Layout.getItem("active-search");
+        ItemStack item = c.getCurrentSearch().isEmpty() ? ConfigManager.layout.getItem("s") : ConfigManager.layout.getItem("active-search");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.search.name"));
-        meta.setLore(Messages.getLoreList("items.search.lore", "%filter%", c.getCurrentSearch()));
+        meta.setItemName(M.getFormatted("items.search.name"));
+        meta.setLore(M.getLoreList("items.search.lore", "%filter%", c.getCurrentSearch()));
         item.setItemMeta(meta);
         return new InventoryButton()
                 .creator(player -> item)

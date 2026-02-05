@@ -6,7 +6,7 @@ import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
@@ -44,7 +44,7 @@ public class CancelAuctionGUI extends InventoryGUI implements Runnable{
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,6*9, Messages.getFormatted("inventory-titles.cancel-auction"));
+        return Bukkit.createInventory(null,6*9, M.getFormatted("inventory-titles.cancel-auction"));
     }
 
     @Override
@@ -105,13 +105,13 @@ public class CancelAuctionGUI extends InventoryGUI implements Runnable{
                     Player p = (Player) event.getWhoClicked();
                     //check if inventory is full
                     if(p.getInventory().firstEmpty() == -1){
-                        p.sendMessage(Messages.getFormatted("chat.inventory-full"));
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     //ItemNote test = NoteStorage.getNote(note.getNoteID().toString());
                     if (!note.isOnAuction()) {
-                        p.sendMessage(Messages.getFormatted("chat.already-sold2"));
+                        p.sendMessage(M.getFormatted("chat.already-sold2"));
                         Sounds.villagerDeny(event);
                         return;
                     }
@@ -121,7 +121,7 @@ public class CancelAuctionGUI extends InventoryGUI implements Runnable{
                     ItemNoteStorage.deleteNote(note);
                     if (goBackToAuctionHouse) AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(c), p);
                     else AuctionHouse.getGuiManager().openGUI(new MyAuctionsGUI(c), p);
-                    p.sendMessage(Messages.getFormatted("chat.auction-canceled"));
+                    p.sendMessage(M.getFormatted("chat.auction-canceled"));
                 });
     }
 

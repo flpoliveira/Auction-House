@@ -5,7 +5,7 @@ import me.elaineqheart.auctionHouse.GUI.InventoryButton;
 import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
@@ -40,7 +40,7 @@ public class CollectSoldItemGUI extends InventoryGUI {
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,6*9, Messages.getFormatted("inventory-titles.collect-sold"));
+        return Bukkit.createInventory(null,6*9, M.getFormatted("inventory-titles.collect-sold"));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CollectSoldItemGUI extends InventoryGUI {
                         collect(p, note.getNoteID(), item.getAmount(), price);
                         Sounds.experience(event);
                         AuctionHouse.getGuiManager().openGUI(new MyAuctionsGUI(c), p);
-                        p.sendMessage(Messages.getFormatted("chat.collect-sold-auction", getProfit(price),
+                        p.sendMessage(M.getFormatted("chat.collect-sold-auction", getProfit(price),
                                 "%amount%", String.valueOf(item.getAmount()),
                                 "%item%", note.getItemName()));
                 });

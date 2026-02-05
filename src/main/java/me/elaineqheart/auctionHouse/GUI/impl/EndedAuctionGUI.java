@@ -6,7 +6,8 @@ import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
@@ -47,7 +48,7 @@ public class EndedAuctionGUI extends InventoryGUI implements Runnable{
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,6*9, Messages.getFormatted("inventory-titles.auction-view"));
+        return Bukkit.createInventory(null,6*9, M.getFormatted("inventory-titles.auction-view"));
     }
 
     @Override
@@ -126,18 +127,18 @@ public class EndedAuctionGUI extends InventoryGUI implements Runnable{
                 .consumer(event -> {
                     Player p = (Player) event.getWhoClicked();
                     if(p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage(Messages.getFormatted("chat.inventory-full"));
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     ItemNote test = AuctionHouseStorage.getNote(note.getNoteID());
                     if (test == null) {
-                        p.sendMessage(Messages.getFormatted("chat.non-existent2"));
+                        p.sendMessage(M.getFormatted("chat.non-existent2"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     p.getInventory().addItem(note.getItem());
-                    p.sendMessage(Messages.getFormatted("chat.claim-auction",
+                    p.sendMessage(M.getFormatted("chat.claim-auction",
                             "%item%", note.getItemName(),
                             "%player%", note.getPlayerName()));
                     Sounds.experience(event);
@@ -149,6 +150,13 @@ public class EndedAuctionGUI extends InventoryGUI implements Runnable{
                         throw new RuntimeException(e);
                     }
                     openGUI(p);
+                    ConfigManager.transactionLogger.logTransaction(
+                            p.getName(),
+                            note.getPlayerName(),
+                            note.getItemName(),
+                            note.getPrice(),
+                            note.getItem().getAmount(),
+                            !note.isBIDAuction());
                 });
     }
     private InventoryButton collectCoins() {
@@ -158,13 +166,13 @@ public class EndedAuctionGUI extends InventoryGUI implements Runnable{
                     Player p = (Player) event.getWhoClicked();
                     double price = note.getBid(p);
                     if (!note.canClaimBid(p.getUniqueId())) {
-                        p.sendMessage(Messages.getFormatted("chat.non-existent2"));
+                        p.sendMessage(M.getFormatted("chat.non-existent2"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     Economy eco = VaultHook.getEconomy();
                     eco.depositPlayer(p, price);
-                    p.sendMessage(Messages.getFormatted("chat.collect-coins", price,
+                    p.sendMessage(M.getFormatted("chat.collect-coins", price,
                             "%item%", note.getItemName()));
                     Sounds.experience(event);
 

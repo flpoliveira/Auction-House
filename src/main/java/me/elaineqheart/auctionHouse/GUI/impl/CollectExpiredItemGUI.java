@@ -5,7 +5,7 @@ import me.elaineqheart.auctionHouse.GUI.InventoryButton;
 import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
@@ -28,7 +28,7 @@ public class CollectExpiredItemGUI extends InventoryGUI {
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,6*9, Messages.getFormatted("inventory-titles.collect-expired"));
+        return Bukkit.createInventory(null,6*9, M.getFormatted("inventory-titles.collect-expired"));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CollectExpiredItemGUI extends InventoryGUI {
                     Player p = (Player) event.getWhoClicked();
                     //check if inventory is full
                     if(p.getInventory().firstEmpty() == -1){
-                        p.sendMessage(Messages.getFormatted("chat.inventory-full"));
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
                         Sounds.villagerDeny(event);
                         return;
                     }
@@ -91,9 +91,9 @@ public class CollectExpiredItemGUI extends InventoryGUI {
                     //expired by a moderator:
                     if(note.getAdminMessage() != null && !note.getAdminMessage().isEmpty()) {
                         if(note.getItem().equals(ItemManager.createDirt())) {
-                            p.sendMessage(Messages.getFormatted("chat.deleted-auction-by-admin", "%reason%", note.getAdminMessage()));
+                            p.sendMessage(M.getFormatted("chat.deleted-auction-by-admin", "%reason%", note.getAdminMessage()));
                         }else {
-                            p.sendMessage(Messages.getFormatted("chat.expired-auction-by-admin", "%reason%", note.getAdminMessage()));
+                            p.sendMessage(M.getFormatted("chat.expired-auction-by-admin", "%reason%", note.getAdminMessage()));
                             p.getInventory().addItem(note.getItem());
                         }
                         ItemNoteStorage.deleteNote(note);

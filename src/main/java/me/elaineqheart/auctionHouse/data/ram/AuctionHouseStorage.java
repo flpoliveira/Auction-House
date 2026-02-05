@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.data.ram;
 
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Blacklist;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.Blacklist;
 
 import java.util.*;
 import java.util.stream.Collectors;

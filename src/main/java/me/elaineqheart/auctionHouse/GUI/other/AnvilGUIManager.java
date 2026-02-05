@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.GUI.other;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import org.bukkit.Bukkit;
@@ -37,7 +37,7 @@ public class AnvilGUIManager implements Listener {
     }
 
     public void open(Player player, String inventoryTitleKey, AnvilHandler handler) {
-        AnvilView view = MenuType.ANVIL.create(player, Messages.getFormatted(inventoryTitleKey));
+        AnvilView view = MenuType.ANVIL.create(player, M.getFormatted(inventoryTitleKey));
         view.setMaximumRepairCost(0);
         view.setItem(0, ItemManager.emptyPaper);
         registerHandledInventory(view.getTopInventory(), handler);

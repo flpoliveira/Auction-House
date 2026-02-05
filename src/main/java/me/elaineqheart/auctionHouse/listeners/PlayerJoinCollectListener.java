@@ -2,7 +2,7 @@ package me.elaineqheart.auctionHouse.listeners;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.impl.CollectSoldItemGUI;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
@@ -28,7 +28,7 @@ public class PlayerJoinCollectListener implements Listener {
         if (!note.isSold() && !(note.isBIDAuction() && note.hasBidHistory() && note.isExpired())) return;
         int amount = note.getItem().getAmount() - note.getPartiallySoldAmountLeft();
         if(CollectSoldItemGUI.collect(p, note.getNoteID(), amount, note.getSoldPrice())
-            && SettingManager.soldMessageEnabled) p.sendMessage(Messages.getFormatted("chat.sold-message.auto-collect", note.getSoldPrice(),
+            && SettingManager.soldMessageEnabled) p.sendMessage(M.getFormatted("chat.sold-message.auto-collect", note.getSoldPrice(),
                     "%player%", note.getBuyerName(),
                     "%item%", note.getItemName(),
                     "%amount%", String.valueOf(amount)));

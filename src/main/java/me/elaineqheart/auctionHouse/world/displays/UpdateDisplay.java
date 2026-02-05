@@ -4,7 +4,7 @@ import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
@@ -70,7 +70,7 @@ public class UpdateDisplay implements Runnable{
                     for (Sign sign : signs) {
                         sign.getSide(Side.FRONT).setLine(0, ChatColor.GOLD + ChatColor.stripColor(StringUtils.formatPrice(price)));
                         sign.getSide(Side.FRONT).setLine(1, ChatColor.YELLOW + time);
-                        sign.getSide(Side.FRONT).setLine(3, Messages.getFormatted("world.displays.sign-interaction"));
+                        sign.getSide(Side.FRONT).setLine(3, M.getFormatted("world.displays.sign-interaction"));
                         sign.update(true, false);
                     }
 
@@ -109,10 +109,10 @@ public class UpdateDisplay implements Runnable{
                             data.text.setVisibleByDefault(true);
                             if(data.type.equals("highest_price")) {
                                 data.text.setText(ChatColor.YELLOW + "#" + rank + " " + ChatColor.RESET + name + ChatColor.GRAY + "\n" +
-                                        Messages.getFormatted("world.displays.by-player") + playerName);
+                                        M.getFormatted("world.displays.by-player") + playerName);
                             } else if(data.type.equals("ending_soon")) {
                                 data.text.setText(ChatColor.GREEN + "#" + rank + " " + ChatColor.RESET + name + ChatColor.GRAY + "\n" +
-                                        Messages.getFormatted("world.displays.by-player")+ playerName);
+                                        M.getFormatted("world.displays.by-player")+ playerName);
                             }
 
                             data.text.getPersistentDataContainer().set(new NamespacedKey(AuctionHouse.getPlugin(), "display_text"), PersistentDataType.BOOLEAN, true);
@@ -148,13 +148,13 @@ public class UpdateDisplay implements Runnable{
 
     public static final HashMap<Integer, DisplayNote> displays = new HashMap<>();
     public static final HashMap<Location, Integer> locations = new HashMap<>();
-    private static final ConfigurationSection ymlData = ConfigManager.displays.get().getConfigurationSection("displays");
+    private static final ConfigurationSection ymlData = ConfigManager.displays.getCustomFile().getConfigurationSection("displays");
 
     public static ConfigurationSection getYmlData() {
         if(ymlData != null) return ymlData;
-        ConfigManager.displays.get().createSection("displays");
+        ConfigManager.displays.getCustomFile().createSection("displays");
         ConfigManager.displays.save();
-        return ConfigManager.displays.get().getConfigurationSection("displays");
+        return ConfigManager.displays.getCustomFile().getConfigurationSection("displays");
     }
 
     public static void init() {

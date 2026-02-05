@@ -8,7 +8,7 @@ import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import me.elaineqheart.auctionHouse.data.ram.Bid;
@@ -63,7 +63,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
 
     @Override
     protected Inventory createInventory() {
-        return Bukkit.createInventory(null,6*9, Messages.getFormatted("inventory-titles.auction-view"));
+        return Bukkit.createInventory(null,6*9, M.getFormatted("inventory-titles.auction-view"));
     }
 
     @Override
@@ -172,7 +172,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                 .consumer(event -> {
                     Sounds.click(event);
                     if(note.getPlayerName().equals(event.getWhoClicked().getName())) {
-                        event.getWhoClicked().sendMessage(Messages.getFormatted("chat.own-auction"));
+                        event.getWhoClicked().sendMessage(M.getFormatted("chat.own-auction"));
                         return;
                     }
                     ItemStack item = note.getItem();
@@ -187,7 +187,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                     Player p = (Player) event.getWhoClicked();
                     Sounds.click(event);
                     if(note.getPlayerName().equals(p.getName())) {
-                        p.sendMessage(Messages.getFormatted("chat.own-auction"));
+                        p.sendMessage(M.getFormatted("chat.own-auction"));
                         return;
                     }
                     AnvilHandler handler = new AnvilHandler() {
@@ -197,7 +197,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                                 if (amount <= 0 || amount > note.getCurrentAmount()) throw new RuntimeException();
                                 if (note.getPrice() / note.getItem().getAmount() * amount > VaultHook.getEconomy().getBalance(p)) {
                                     AuctionHouse.getGuiManager().openGUI(new AuctionViewGUI(note, c, 0, goBackTo), p);
-                                    p.sendMessage(Messages.getFormatted("chat.not-enough-money"));
+                                    p.sendMessage(M.getFormatted("chat.not-enough-money"));
                                     Sounds.villagerDeny(event);
                                     return;
                                 }
@@ -206,7 +206,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                                 AuctionHouse.getGuiManager().openGUI(new ConfirmBuyGUI(note, c, item), p);
                             } catch (Exception e) {
                                 AuctionHouse.getGuiManager().openGUI(new AuctionViewGUI(note, c, 0, goBackTo), p);
-                                p.sendMessage(Messages.getFormatted("chat.invalid-amount"));
+                                p.sendMessage(M.getFormatted("chat.invalid-amount"));
                                 Sounds.villagerDeny(event);
                             }
                         }
@@ -233,13 +233,13 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                         public void execute(Player p, String typedText) {
                             double amount = StringUtils.parsePositiveNumber(typedText);
                             if (amount <= bid) {
-                                p.sendMessage(Messages.getFormatted("chat.invalid-amount"));
+                                p.sendMessage(M.getFormatted("chat.invalid-amount"));
                                 Sounds.villagerDeny(event);
                                 AuctionHouse.getGuiManager().openGUI(new AuctionViewGUI(note, c, 0, goBackTo), p);
                                 return;
                             }
                             if (amount > VaultHook.getEconomy().getBalance(p)) {
-                                p.sendMessage(Messages.getFormatted("chat.not-enough-money"));
+                                p.sendMessage(M.getFormatted("chat.not-enough-money"));
                                 Sounds.villagerDeny(event);
                                 AuctionHouse.getGuiManager().openGUI(new AuctionViewGUI(note, c, 0, goBackTo), p);
                             } else {
@@ -263,11 +263,11 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                     Sounds.click(event);
 
                     if(note.getPlayerUUID().equals(event.getWhoClicked().getUniqueId())) {
-                        event.getWhoClicked().sendMessage(Messages.getFormatted("chat.own-auction"));
+                        event.getWhoClicked().sendMessage(M.getFormatted("chat.own-auction"));
                         return;
                     }
                     if(note.isExpired()) {
-                        event.getWhoClicked().sendMessage(Messages.getFormatted("chat.expired"));
+                        event.getWhoClicked().sendMessage(M.getFormatted("chat.expired"));
                         return;
                     }
                     AuctionHouse.getGuiManager().openGUI(new ConfirmBidGUI(note, c, bid, goBackTo == AhConfiguration.View.AUCTION_HOUSE), c.getPlayer());
@@ -281,7 +281,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
     private InventoryButton topBid() {
         return new InventoryButton()
                 .creator(player -> ItemManager.createTopBid(note.getPrice(), bid))
-                .consumer(event -> c.getPlayer().sendMessage(Messages.getFormatted("chat.already-top-bid")));
+                .consumer(event -> c.getPlayer().sendMessage(M.getFormatted("chat.already-top-bid")));
     }
     private InventoryButton cancelAuction() {
         return new InventoryButton()
@@ -290,12 +290,12 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                     Player p = (Player) event.getWhoClicked();
                     //check if inventory is full
                     if(p.getInventory().firstEmpty() == -1){
-                        p.sendMessage(Messages.getFormatted("chat.inventory-full"));
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
                         Sounds.villagerDeny(event);
                         return;
                     }
                     if (note.hasBidHistory()) {
-                        p.sendMessage(Messages.getFormatted("chat.already-sold3"));
+                        p.sendMessage(M.getFormatted("chat.already-sold3"));
                         Sounds.villagerDeny(event);
                         return;
                     }
@@ -304,7 +304,7 @@ public class AuctionViewGUI extends InventoryGUI implements Runnable{
                     p.getInventory().addItem(note.getItem());
                     ItemNoteStorage.deleteNote(note);
                     openGUI(p);
-                    p.sendMessage(Messages.getFormatted("chat.auction-canceled"));
+                    p.sendMessage(M.getFormatted("chat.auction-canceled"));
                 });
     }
 

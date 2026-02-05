@@ -1,6 +1,7 @@
 package me.elaineqheart.auctionHouse.listeners;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.PlayerPreferencesManager;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.PlayerPreferences;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,14 +14,14 @@ public class AhConfigurationListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player p = event.getPlayer();;
-        PlayerPreferencesManager.saveInstance(p.getUniqueId(), AhConfiguration.getInstance(p));
+        ConfigManager.playerPreferences.saveInstance(p.getUniqueId(), AhConfiguration.getInstance(p));
         AhConfiguration.removeInstance(p);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player p = event.getPlayer();
-        PlayerPreferencesManager.loadInstance(p);
+        ConfigManager.playerPreferences.loadInstance(p);
     }
 
 }

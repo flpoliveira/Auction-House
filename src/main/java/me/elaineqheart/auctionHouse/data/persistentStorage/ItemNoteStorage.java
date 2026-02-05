@@ -1,6 +1,6 @@
 package me.elaineqheart.auctionHouse.data.persistentStorage;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.JsonNoteStorage;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.JsonNoteStorage;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import java.io.IOException;
 
 public class ItemNoteStorage {
 
-    public static void createNote(Player p, ItemStack item, double price, boolean isBINAuction) {
+    public static void createNote(Player p, ItemStack item, double price, boolean isBIDAuction) {
         //if(r()) RedisNoteStorage.createNote(p, item, price); else
-        JsonNoteStorage.createNote(p, item, price, isBINAuction);
+        JsonNoteStorage.createNote(p, item, price, isBIDAuction);
     }
 
     public static void saveNotes() throws IOException {

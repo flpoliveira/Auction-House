@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-public class Messages {
+public class M {
 
     private static File file;
     private static FileConfiguration customFile;
@@ -83,7 +83,7 @@ public class Messages {
         String message = getValue(key,false);
         message = replacePlaceholders(key, message, replacements);
         List<String> list = Arrays.asList(message.split("&n"));
-        list.replaceAll(Messages::adventureApi);
+        list.replaceAll(M::adventureApi);
         return list;
     }
     public static List<String> getLoreList(String key, double price, String... replacements) {
@@ -92,7 +92,7 @@ public class Messages {
         message = message.replace("%price%", StringUtils.formatPrice(price));
         message = message.replace("%number%", StringUtils.formatNumber(price));
         List<String> list = Arrays.asList(message.split("&n"));
-        list.replaceAll(Messages::adventureApi);
+        list.replaceAll(M::adventureApi);
         return list;
     }
 

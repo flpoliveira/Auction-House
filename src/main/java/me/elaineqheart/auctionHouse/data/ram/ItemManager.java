@@ -4,9 +4,8 @@ import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.impl.AuctionHouseGUI;
 import me.elaineqheart.auctionHouse.GUI.impl.MyAuctionsGUI;
 import me.elaineqheart.auctionHouse.data.StringUtils;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Layout;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Messages;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.Permissions;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -83,7 +82,7 @@ public class ItemManager {
     }
 
     private static ItemStack createFillerItem(){
-        ItemStack item = Layout.getItem("#");
+        ItemStack item = ConfigManager.layout.getItem("#");
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
         meta.setHideTooltip(true);
@@ -91,102 +90,102 @@ public class ItemManager {
         return item;
     }
     private static ItemStack createLockedSlot(){
-        ItemStack item = Layout.getItem("locked-slot");
+        ItemStack item = ConfigManager.layout.getItem("locked-slot");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.locked-slot.name"));
+        meta.setItemName(M.getFormatted("items.locked-slot.name"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createRefresh(){
-        ItemStack item = Layout.getItem("r");
+        ItemStack item = ConfigManager.layout.getItem("r");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.refresh.name"));
-        meta.setLore(Messages.getLoreList("items.refresh.lore"));
+        meta.setItemName(M.getFormatted("items.refresh.name"));
+        meta.setLore(M.getLoreList("items.refresh.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createMyBids(){
-        ItemStack item = Layout.getItem("d");
+        ItemStack item = ConfigManager.layout.getItem("d");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-bids.name"));
-        meta.setLore(Messages.getLoreList("items.my-bids.lore"));
+        meta.setItemName(M.getFormatted("items.my-bids.name"));
+        meta.setLore(M.getLoreList("items.my-bids.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createBackToMainMenu(){
-        ItemStack item = Layout.getItem("b");
+        ItemStack item = ConfigManager.layout.getItem("b");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.back-main-menu.name"));
-        meta.setLore(Messages.getLoreList("items.back-main-menu.lore"));
+        meta.setItemName(M.getFormatted("items.back-main-menu.name"));
+        meta.setLore(M.getLoreList("items.back-main-menu.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createBackToMyAuctions(){
-        ItemStack item = Layout.getItem("back-to-my-auctions");
+        ItemStack item = ConfigManager.layout.getItem("back-to-my-auctions");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.back-my-auctions.name"));
-        meta.setLore(Messages.getLoreList("items.back-my-auctions.lore"));
+        meta.setItemName(M.getFormatted("items.back-my-auctions.name"));
+        meta.setLore(M.getLoreList("items.back-my-auctions.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createInfo(){
-        ItemStack item = Layout.getItem("i");
+        ItemStack item = ConfigManager.layout.getItem("i");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.info.name"));
+        meta.setItemName(M.getFormatted("items.info.name"));
         //cast the tax value to int and then to double to avoid floating point issues
         String tax = ChatColor.GOLD + "" + (double)(int)(AuctionHouse.getPlugin().getConfig().getDouble("tax") * 1000) / 10 + "%";
-        meta.setLore(Messages.getLoreList("items.info.lore", "%tax%", tax));
+        meta.setLore(M.getLoreList("items.info.lore", "%tax%", tax));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createMyAuction(){
-        ItemStack item = Layout.getItem("m");
+        ItemStack item = ConfigManager.layout.getItem("m");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-auctions.name"));
-        meta.setLore(Messages.getLoreList("items.my-auctions.lore"));
+        meta.setItemName(M.getFormatted("items.my-auctions.name"));
+        meta.setLore(M.getLoreList("items.my-auctions.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createSortHighestPrice(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.sort-highest-price.name"));
-        meta.setLore(Messages.getLoreList("items.sort-highest-price.lore"));
+        meta.setItemName(M.getFormatted("items.sort-highest-price.name"));
+        meta.setLore(M.getLoreList("items.sort-highest-price.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createSortLowestPrice(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.sort-lowest-price.name"));
-        meta.setLore(Messages.getLoreList("items.sort-lowest-price.lore"));
+        meta.setItemName(M.getFormatted("items.sort-lowest-price.name"));
+        meta.setLore(M.getLoreList("items.sort-lowest-price.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createSortEndingSoon(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.sort-ending-soon.name"));
-        meta.setLore(Messages.getLoreList("items.sort-ending-soon.lore"));
+        meta.setItemName(M.getFormatted("items.sort-ending-soon.name"));
+        meta.setLore(M.getLoreList("items.sort-ending-soon.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createSortAlphabetical(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.sort-alphabetical.name"));
-        meta.setLore(Messages.getLoreList("items.sort-alphabetical.lore"));
+        meta.setItemName(M.getFormatted("items.sort-alphabetical.name"));
+        meta.setLore(M.getLoreList("items.sort-alphabetical.lore"));
         item.setItemMeta(meta);
         return item;
     }
@@ -203,43 +202,43 @@ public class ItemManager {
         return mySortActiveAuctions;
     }
     private static ItemStack createMySortAllAuctions(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-sort-all.name"));
-        meta.setLore(Messages.getLoreList("items.my-sort-all.lore"));
+        meta.setItemName(M.getFormatted("items.my-sort-all.name"));
+        meta.setLore(M.getLoreList("items.my-sort-all.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createMySortSoldItems(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-sort-sold.name"));
-        meta.setLore(Messages.getLoreList("items.my-sort-sold.lore"));
+        meta.setItemName(M.getFormatted("items.my-sort-sold.name"));
+        meta.setLore(M.getLoreList("items.my-sort-sold.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createMySortExpiredItems(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-sort-expired.name"));
-        meta.setLore(Messages.getLoreList("items.my-sort-expired.lore"));
+        meta.setItemName(M.getFormatted("items.my-sort-expired.name"));
+        meta.setLore(M.getLoreList("items.my-sort-expired.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createMySortActiveAuctions(){
-        ItemStack item = Layout.getItem("o");
+        ItemStack item = ConfigManager.layout.getItem("o");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.my-sort-active.name"));
-        meta.setLore(Messages.getLoreList("items.my-sort-active.lore"));
+        meta.setItemName(M.getFormatted("items.my-sort-active.name"));
+        meta.setLore(M.getLoreList("items.my-sort-active.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createEmptyPaper() {
-        ItemStack item = Layout.getItem("anvil-search-paper");
+        ItemStack item = ConfigManager.layout.getItem("anvil-search-paper");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.setItemName(ChatColor.GRAY + "");
@@ -248,98 +247,98 @@ public class ItemManager {
         return item;
     }
     private static ItemStack createCancel() {
-        ItemStack item = Layout.getItem("cancel");
+        ItemStack item = ConfigManager.layout.getItem("cancel");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.cancel.name"));
+        meta.setItemName(M.getFormatted("items.cancel.name"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createCollectExpiredItem() {
-        ItemStack item = Layout.getItem("collect-expired-item");
+        ItemStack item = ConfigManager.layout.getItem("collect-expired-item");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.collect-expired.name"));
-        meta.setLore(Messages.getLoreList("items.collect-expired.lore"));
+        meta.setItemName(M.getFormatted("items.collect-expired.name"));
+        meta.setLore(M.getLoreList("items.collect-expired.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createCancelBINAuction() {
-        ItemStack item = Layout.getItem("cancel-auction");
+        ItemStack item = ConfigManager.layout.getItem("cancel-auction");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.cancel-auction.name"));
-        meta.setLore(Messages.getLoreList("items.cancel-auction.lore"));
+        meta.setItemName(M.getFormatted("items.cancel-auction.name"));
+        meta.setLore(M.getLoreList("items.cancel-auction.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createCancelAuction() {
-        ItemStack item = Layout.getItem("cancel-auction");
+        ItemStack item = ConfigManager.layout.getItem("cancel-auction");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.cancel-bid-auction.name"));
-        meta.setLore(Messages.getLoreList("items.cancel-bid-auction.lore"));
+        meta.setItemName(M.getFormatted("items.cancel-bid-auction.name"));
+        meta.setLore(M.getLoreList("items.cancel-bid-auction.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createCommandBlockInfo() {
-        ItemStack item = Layout.getItem("command-block-info");
+        ItemStack item = ConfigManager.layout.getItem("command-block-info");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.admin-info.name"));
-        meta.setLore(Messages.getLoreList("items.admin-info.lore"));
+        meta.setItemName(M.getFormatted("items.admin-info.name"));
+        meta.setLore(M.getLoreList("items.admin-info.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createAdminCancelAuction() {
-        ItemStack item = Layout.getItem("admin-cancel-auction");
+        ItemStack item = ConfigManager.layout.getItem("admin-cancel-auction");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.admin-cancel-auction.name"));
-        meta.setLore(Messages.getLoreList("items.admin-cancel-auction.lore"));
+        meta.setItemName(M.getFormatted("items.admin-cancel-auction.name"));
+        meta.setLore(M.getLoreList("items.admin-cancel-auction.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createAdminExpireAuction() {
-        ItemStack item = Layout.getItem("admin-expire-auction");
+        ItemStack item = ConfigManager.layout.getItem("admin-expire-auction");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.admin-expire-auction.name"));
-        meta.setLore(Messages.getLoreList("items.admin-expire-auction.lore"));
+        meta.setItemName(M.getFormatted("items.admin-expire-auction.name"));
+        meta.setLore(M.getLoreList("items.admin-expire-auction.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createConfirmItem() {
-        ItemStack item = Layout.getItem("confirm");
+        ItemStack item = ConfigManager.layout.getItem("confirm");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.confirm.name"));
+        meta.setItemName(M.getFormatted("items.confirm.name"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createChooseItemBuyAmount() {
-        ItemStack item = Layout.getItem("choose-item-buy-amount");
+        ItemStack item = ConfigManager.layout.getItem("choose-item-buy-amount");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.choose-item-buy-amount.name"));
-        meta.setLore(Messages.getLoreList("items.choose-item-buy-amount.lore"));
+        meta.setItemName(M.getFormatted("items.choose-item-buy-amount.name"));
+        meta.setLore(M.getLoreList("items.choose-item-buy-amount.lore"));
         item.setItemMeta(meta);
         return item;
     }
     private static ItemStack createLoadingItem() {
-        ItemStack item = Layout.getItem("loading");
+        ItemStack item = ConfigManager.layout.getItem("loading");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.loading.name"));
+        meta.setItemName(M.getFormatted("items.loading.name"));
         item.setItemMeta(meta);
         return item;
     }
 
     public static ItemStack createDirt() {
-        ItemStack item = Layout.getItem("dirt");
+        ItemStack item = ConfigManager.layout.getItem("dirt");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.deleted.name"));
+        meta.setItemName(M.getFormatted("items.deleted.name"));
         item.setItemMeta(meta);
         return item;
     }
@@ -350,37 +349,37 @@ public class ItemManager {
         List<String> lore = meta.getLore();
         if (lore==null) lore = new ArrayList<>();
         if (isShulkerBox(item)) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.shulker-preview"));
+            lore.addAll(M.getLoreList("items.auction.lore.shulker-preview"));
         }
         if (!note.isBIDAuction()) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.default", ownAuction ? note.getPrice() : note.getCurrentPrice(),
+            lore.addAll(M.getLoreList("items.auction.lore.default", ownAuction ? note.getPrice() : note.getCurrentPrice(),
                     "%player%", note.getPlayerName()));
         } else {
             if (note.getBidHistoryList().isEmpty()) {
-                lore.addAll(Messages.getLoreList("items.auction.lore.default-starting-bid", note.getPrice(),
+                lore.addAll(M.getLoreList("items.auction.lore.default-starting-bid", note.getPrice(),
                         "%player%", note.getPlayerName()));
             } else {
-                lore.addAll(Messages.getLoreList("items.auction.lore.default-bid", note.getPrice(),
+                lore.addAll(M.getLoreList("items.auction.lore.default-bid", note.getPrice(),
                         "%player%", note.getPlayerName(),
                         "%amountOfBids%", String.valueOf(note.getBidHistoryList().size()),
                         "%bidder%", note.getLastBidderName()));
             }
         }
         if (Objects.equals(Bukkit.getPlayer(note.getPlayerUUID()),p)) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.own-auction"));
+            lore.addAll(M.getLoreList("items.auction.lore.own-auction"));
         }
         if (note.isExpired() && note.getAdminMessage()!=null && !note.getAdminMessage().isEmpty()) {
             if (note.getItem().equals(createDirt())) {
-                lore.addAll(Messages.getLoreList("items.auction.lore.admin-deleted"));
+                lore.addAll(M.getLoreList("items.auction.lore.admin-deleted"));
             } else {
-                lore.addAll(Messages.getLoreList("items.auction.lore.admin-expired"));
+                lore.addAll(M.getLoreList("items.auction.lore.admin-expired"));
             }
-            lore.addAll(Messages.getLoreList("items.auction.lore.admin-message",
+            lore.addAll(M.getLoreList("items.auction.lore.admin-message",
                     "%reason%", note.getAdminMessage()));
-            lore.addAll(Messages.getLoreList("items.auction.lore.expired"));
+            lore.addAll(M.getLoreList("items.auction.lore.expired"));
         } else if (note.isSold() && note.isOnAuction()) {
             if (ownAuction) {
-                lore.addAll(Messages.getLoreList("items.auction.lore.partially-sold",
+                lore.addAll(M.getLoreList("items.auction.lore.partially-sold",
                         "%sold%", String.valueOf(note.getItem().getAmount() - note.getPartiallySoldAmountLeft()),
                         "%total%", String.valueOf(note.getItem().getAmount()),
                         "%buyer%", note.getBuyerName()));
@@ -388,25 +387,25 @@ public class ItemManager {
                 item.setAmount(note.getPartiallySoldAmountLeft());
             }
             if (!note.isExpired()) {
-                lore.addAll(Messages.getLoreList("items.auction.lore.active",
+                lore.addAll(M.getLoreList("items.auction.lore.active",
                         "%time%", StringUtils.getTime(note.getTimeLeft(), true)));
             } else {
-                lore.addAll(Messages.getLoreList("items.auction.lore.expired"));
+                lore.addAll(M.getLoreList("items.auction.lore.expired"));
             }
         } else if (note.isExpired() && (!note.isSold() && !note.isBIDAuction() || !note.hasBidHistory() && note.isBIDAuction())) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.expired"));
+            lore.addAll(M.getLoreList("items.auction.lore.expired"));
         } else if (note.isBIDAuction() && note.hasBidHistory() && note.isExpired()) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.ended"));
+            lore.addAll(M.getLoreList("items.auction.lore.ended"));
         } else if (note.isSold() && !note.isOnAuction()) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.sold",
+            lore.addAll(M.getLoreList("items.auction.lore.sold",
                     "%buyer%", note.getBuyerName()));
         } else if (note.isOnWaitingList()) {
-            lore.addAll(Messages.getLoreList("items.auction.lore.waiting-list",
+            lore.addAll(M.getLoreList("items.auction.lore.waiting-list",
                     "%time%", StringUtils.getTime(
-                            note.getTimeLeft() - Permissions.getAuctionDuration(p, note.isBIDAuction()), true
+                            note.getTimeLeft() - ConfigManager.permissions.getAuctionDuration(p, note.isBIDAuction()), true
                     )));
         } else {
-            lore.addAll(Messages.getLoreList("items.auction.lore.active",
+            lore.addAll(M.getLoreList("items.auction.lore.active",
                     "%time%", StringUtils.getTime(note.getTimeLeft(), true)));
         }
         meta.setLore(lore);
@@ -419,10 +418,10 @@ public class ItemManager {
         assert meta != null;
         List<String> lore = meta.getLore();
         if (lore == null) lore = new ArrayList<>();
-        lore.addAll(Messages.getLoreList("items.auction.lore.default", note.getSoldPrice(),
+        lore.addAll(M.getLoreList("items.auction.lore.default", note.getSoldPrice(),
                 "%player%", note.getPlayerName()));
-        lore.addAll(Messages.getLoreList("items.auction.lore.own-auction"));
-        lore.addAll(Messages.getLoreList("items.auction.lore.sold",
+        lore.addAll(M.getLoreList("items.auction.lore.own-auction"));
+        lore.addAll(M.getLoreList("items.auction.lore.sold",
                 "%buyer%", note.getBuyerName()));
         item.setAmount(item.getAmount() - note.getPartiallySoldAmountLeft());
 
@@ -435,7 +434,7 @@ public class ItemManager {
         assert meta != null;
         List<String> lore = meta.getLore();
         if(lore==null) lore = new ArrayList<>();
-        lore.addAll(Messages.getLoreList("items.auction.lore.buying-item"));
+        lore.addAll(M.getLoreList("items.auction.lore.buying-item"));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
@@ -446,7 +445,7 @@ public class ItemManager {
         assert meta != null;
         List<String> lore = meta.getLore();
         if(lore==null) lore = new ArrayList<>();
-        lore.addAll(Messages.getLoreList("items.admin-expire-item.lore", note.getPrice(),
+        lore.addAll(M.getLoreList("items.admin-expire-item.lore", note.getPrice(),
                 "%player%", note.getPlayerName(),
                 "%reason%", reason));
         meta.setLore(lore);
@@ -459,7 +458,7 @@ public class ItemManager {
         assert meta != null;
         List<String> lore = meta.getLore();
         if(lore==null) lore = new ArrayList<>();
-        lore.addAll(Messages.getLoreList("items.admin-delete-item.lore", note.getPrice(),
+        lore.addAll(M.getLoreList("items.admin-delete-item.lore", note.getPrice(),
                 "%player%", note.getPlayerName(),
                 "%reason%", reason));
         meta.setLore(lore);
@@ -467,58 +466,58 @@ public class ItemManager {
         return item;
     }
     public static ItemStack createTurtleScute(double price) {
-        ItemStack item = Layout.getItem("turtle-scute-confirm");
+        ItemStack item = ConfigManager.layout.getItem("turtle-scute-confirm");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.buy-item.name"));
-        meta.setLore(Messages.getLoreList("items.buy-item.lore", price));
+        meta.setItemName(M.getFormatted("items.buy-item.name"));
+        meta.setLore(M.getLoreList("items.buy-item.lore", price));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createArmadilloScute(double price) {
-        ItemStack item = Layout.getItem("cannot-afford");
+        ItemStack item = ConfigManager.layout.getItem("cannot-afford");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.not-enough-money.name"));
-        meta.setLore(Messages.getLoreList("items.not-enough-money.lore", price));
+        meta.setItemName(M.getFormatted("items.not-enough-money.name"));
+        meta.setLore(M.getLoreList("items.not-enough-money.lore", price));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createConfirm(double price) {
-        ItemStack item = Layout.getItem("confirm");
+        ItemStack item = ConfigManager.layout.getItem("confirm");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.confirm-buy.name"));
-        meta.setLore(Messages.getLoreList("items.confirm-buy.lore", price));
+        meta.setItemName(M.getFormatted("items.confirm-buy.name"));
+        meta.setLore(M.getLoreList("items.confirm-buy.lore", price));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack collectSoldItem(double price) {
-        ItemStack item = Layout.getItem("collect-sold-item");
+        ItemStack item = ConfigManager.layout.getItem("collect-sold-item");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.collect-sold.name"));
-        meta.setLore(Messages.getLoreList("items.collect-sold.lore", price));
+        meta.setItemName(M.getFormatted("items.collect-sold.name"));
+        meta.setLore(M.getLoreList("items.collect-sold.lore", price));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createBidHistory(List<Bid> bidHistory) {
-        ItemStack item = Layout.getItem("bid-history");
+        ItemStack item = ConfigManager.layout.getItem("bid-history");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.bid-history.name"));
+        meta.setItemName(M.getFormatted("items.bid-history.name"));
         List<String> lore = meta.getLore();
         if(lore==null) lore = new ArrayList<>();
-        lore.addAll(Messages.getLoreList("items.bid-history.lore",
+        lore.addAll(M.getLoreList("items.bid-history.lore",
                 "%amountOfBids%", String.valueOf(bidHistory.size())));
         for(int i = 0; i < Math.min(bidHistory.size(), 6); i++) {
             Bid bid = bidHistory.get(bidHistory.size()-1-i);
-            lore.addAll(Messages.getLoreList("items.bid-history.bid", bid.getPrice(),
+            lore.addAll(M.getLoreList("items.bid-history.bid", bid.getPrice(),
                     "%player%", bid.getPlayerName(),
                     "%time%", bid.getTimeAgo()));
         }
         if(bidHistory.size() - 6 > 0) {
-            lore.addAll(Messages.getLoreList("items.bid-history.more",
+            lore.addAll(M.getLoreList("items.bid-history.more",
                     "%amount%", String.valueOf(bidHistory.size()-6)));
         }
         meta.setLore(lore);
@@ -526,24 +525,24 @@ public class ItemManager {
         return item;
     }
     public static ItemStack createBidExplanation(double amount) {
-        ItemStack item = Layout.getItem("bid-explanation");
+        ItemStack item = ConfigManager.layout.getItem("bid-explanation");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.bid-explanation.name", amount));
-        meta.setLore(Messages.getLoreList("items.bid-explanation.lore", amount));
+        meta.setItemName(M.getFormatted("items.bid-explanation.name", amount));
+        meta.setLore(M.getLoreList("items.bid-explanation.lore", amount));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createSubmitBid(double amount, double previousBid) {
-        ItemStack item = Layout.getItem("submit-bid");
+        ItemStack item = ConfigManager.layout.getItem("submit-bid");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         if(previousBid == 0) {
-            meta.setItemName(Messages.getFormatted("items.submit-bid.name", amount));
-            meta.setLore(Messages.getLoreList("items.submit-bid.lore", amount));
+            meta.setItemName(M.getFormatted("items.submit-bid.name", amount));
+            meta.setLore(M.getLoreList("items.submit-bid.lore", amount));
         } else {
-            meta.setItemName(Messages.getFormatted("items.submit-another-bid.name", amount));
-            meta.setLore(Messages.getLoreList("items.submit-another-bid.lore", amount,
+            meta.setItemName(M.getFormatted("items.submit-another-bid.name", amount));
+            meta.setLore(M.getLoreList("items.submit-another-bid.lore", amount,
                     "%price2%", StringUtils.formatPrice(previousBid),
                     "%number2%", StringUtils.formatNumber(previousBid),
                     "%price3%", StringUtils.formatPrice(amount - previousBid),
@@ -553,29 +552,29 @@ public class ItemManager {
         return item;
     }
     public static ItemStack createOwnBid(double amount) {
-        ItemStack item = Layout.getItem("own-bid");
+        ItemStack item = ConfigManager.layout.getItem("own-bid");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.own-bid.name", amount));
-        meta.setLore(Messages.getLoreList("items.own-bid.lore", amount));
+        meta.setItemName(M.getFormatted("items.own-bid.name", amount));
+        meta.setLore(M.getLoreList("items.own-bid.lore", amount));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createCannotAffordBid(double amount) {
-        ItemStack item = Layout.getItem("cannot-afford-bid");
+        ItemStack item = ConfigManager.layout.getItem("cannot-afford-bid");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.cannot-afford-bid.name", amount));
-        meta.setLore(Messages.getLoreList("items.cannot-afford-bid.lore", amount));
+        meta.setItemName(M.getFormatted("items.cannot-afford-bid.name", amount));
+        meta.setLore(M.getLoreList("items.cannot-afford-bid.lore", amount));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createTopBid(double amount, double newBid) {
-        ItemStack item = Layout.getItem("top-bid");
+        ItemStack item = ConfigManager.layout.getItem("top-bid");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.top-bid.name", amount));
-        meta.setLore(Messages.getLoreList("items.top-bid.lore", amount,
+        meta.setItemName(M.getFormatted("items.top-bid.name", amount));
+        meta.setLore(M.getLoreList("items.top-bid.lore", amount,
                 "%price2%", StringUtils.formatPrice(newBid),
                 "%number2%", StringUtils.formatNumber(newBid)));
         item.setItemMeta(meta);
@@ -583,18 +582,18 @@ public class ItemManager {
     }
     public static ItemStack createBINFilter(AhConfiguration.BINFilter binFilter) {
         ItemStack item = switch(binFilter) {
-            case ALL -> Layout.getItem("f");
-            case BIN_ONLY -> Layout.getItem("bin-filter-bin");
-            case AUCTIONS_ONLY -> Layout.getItem("bin-filter-auctions");
+            case ALL -> ConfigManager.layout.getItem("f");
+            case BIN_ONLY -> ConfigManager.layout.getItem("bin-filter-bin");
+            case AUCTIONS_ONLY -> ConfigManager.layout.getItem("bin-filter-auctions");
         };
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted(switch(binFilter) {
+        meta.setItemName(M.getFormatted(switch(binFilter) {
             case ALL -> "items.bin-filter-all.name";
             case BIN_ONLY -> "items.bin-filter-bin.name";
             case AUCTIONS_ONLY -> "items.bin-filter-auctions.name";
         }));
-        meta.setLore(Messages.getLoreList(switch(binFilter) {
+        meta.setLore(M.getLoreList(switch(binFilter) {
             case ALL -> "items.bin-filter-all.lore";
             case BIN_ONLY -> "items.bin-filter-bin.lore";
             case AUCTIONS_ONLY -> "items.bin-filter-auctions.lore";
@@ -603,20 +602,20 @@ public class ItemManager {
         return item;
     }
     public static ItemStack createCollectAuction(ItemNote note) {
-        ItemStack item = Layout.getItem("collect-auction");
+        ItemStack item = ConfigManager.layout.getItem("collect-auction");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.collect-auction.name"));
-        meta.setLore(Messages.getLoreList("items.collect-auction.lore", note.getBidHistoryList().getLast().getPrice()));
+        meta.setItemName(M.getFormatted("items.collect-auction.name"));
+        meta.setLore(M.getLoreList("items.collect-auction.lore", note.getBidHistoryList().getLast().getPrice()));
         item.setItemMeta(meta);
         return item;
     }
     public static ItemStack createCollectCoins(ItemNote note, Player p) {
-        ItemStack item = Layout.getItem("collect-coins");
+        ItemStack item = ConfigManager.layout.getItem("collect-coins");
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setItemName(Messages.getFormatted("items.collect-coins.name"));
-        meta.setLore(Messages.getLoreList("items.collect-coins.lore", note.getBidHistoryList().getLast().getPrice(),
+        meta.setItemName(M.getFormatted("items.collect-coins.name"));
+        meta.setLore(M.getLoreList("items.collect-coins.lore", note.getBidHistoryList().getLast().getPrice(),
                 "%price2%", StringUtils.formatPrice(note.getBid(p)),
                 "%number2%", StringUtils.formatNumber(note.getBid(p)),
                 "%player%", note.getLastBidderName()));

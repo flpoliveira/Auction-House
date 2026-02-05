@@ -66,7 +66,7 @@ public class AhConfiguration {
     }
     public static void loadInstance(Player p, AhConfiguration c) {
         if(c == null) return;
-        if(c.whitelistLetter != null) c.whitelist = ConfigManager.categories.get().getMapList(c.whitelistLetter);
+        if(c.whitelistLetter != null) c.whitelist = ConfigManager.categories.getCustomFile().getMapList(c.whitelistLetter);
         c.setPlayer(p.getUniqueId());
         currentConfigurations.put(p,c);
     }

@@ -1,9 +1,10 @@
-package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
+package me.elaineqheart.auctionHouse.data.persistentStorage.local.configs;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Config;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,47 +12,48 @@ import org.bukkit.entity.Player;
 import java.io.IOException;
 import java.util.UUID;
 
-public class PlayerPreferencesManager extends ConfigManager {
+public class PlayerPreferences extends Config {
 
-    private static final boolean defaultAnnounce = true;
+    private final boolean defaultAnnounce = true;
 
-    public static boolean hasAnnouncementsEnabled(UUID player) {
-        return playerPreferences.get().getBoolean("players." + player.toString() + ".announcements", defaultAnnounce);
+    public boolean hasAnnouncementsEnabled(UUID player) {
+        return getCustomFile().getBoolean("players." + player.toString() + ".announcements", defaultAnnounce);
     }
-    public static void setAnnouncementsEnabled(UUID player, boolean enabled) {
-        if(defaultAnnounce != enabled) playerPreferences.get().set("players." + player + ".announcements", enabled);
-        else playerPreferences.get().set("players." + player + ".announcements", null);
-        playerPreferences.save();
+    public void setAnnouncementsEnabled(UUID player, boolean enabled) {
+        if(defaultAnnounce != enabled) getCustomFile().set("players." + player + ".announcements", enabled);
+        else getCustomFile().set("players." + player + ".announcements", null);
+        save();
     }
-    public static boolean toggleAnnouncements(Player player) {
+    public boolean toggleAnnouncements(Player player) {
         boolean current = hasAnnouncementsEnabled(player.getUniqueId());
         setAnnouncementsEnabled(player.getUniqueId(), !current);
         return !current;
     }
 
-    public static void saveInstance(UUID player, AhConfiguration c) {
-        if(c == null || playerPreferences.get() == null) return;
+    public void saveInstance(UUID player, AhConfiguration c) {
+        if(c == null || getCustomFile() == null) return;
         Gson gson = getGson();
-        playerPreferences.get().set("players." + player + ".configuration", gson.toJson(c));
-        playerPreferences.save();
+        getCustomFile().set("players." + player + ".configuration", gson.toJson(c));
+        save();
     }
-    public static void loadInstance(Player p) {
+    public void loadInstance(Player p) {
         Gson gson = getGson();
-        AhConfiguration.loadInstance(p, gson.fromJson(playerPreferences.get().getString("players." + p.getUniqueId() + ".configuration"), AhConfiguration.class));
+        AhConfiguration.loadInstance(p, gson.fromJson(getCustomFile().getString("players." + p.getUniqueId() + ".configuration"), AhConfiguration.class));
     }
-    public static void setup() {
+    @Override
+    public void setup() {
         for(Player p : Bukkit.getOnlinePlayers()) {
             loadInstance(p);
         }
     }
-    public static void disable() {
-        if(playerPreferences.get() == null) return;
+    public void disable() {
+        if(getCustomFile() == null) return;
         for(Player p : Bukkit.getOnlinePlayers()) {
             saveInstance(p.getUniqueId(), AhConfiguration.getInstance(p));
         }
     }
 
-    private static Gson getGson() {
+    private Gson getGson() {
         return new GsonBuilder()
                 .registerTypeAdapterFactory(new TypeAdapterFactory() {
                     @Override

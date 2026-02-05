@@ -56,7 +56,7 @@ public class SettingManager {
         auctionSetupTime = c.getLong("auction-setup-time", 30);
         defaultMaxAuctions = c.getInt("default-max-auctions", 10);
         soldMessageEnabled = c.getBoolean("sold-message", true);
-        formatter = new DecimalFormat(Messages.getFormatted("placeholders.format-numbers"));
+        formatter = new DecimalFormat(M.getFormatted("placeholders.format-numbers"));
         formatTimeCharacters = c.getString("format-time-characters", "dhms");
         permissionModerate = c.getString("admin-permission", "auctionhouse.moderator");
         partialSelling = c.getBoolean("partial-selling", false);
@@ -76,7 +76,7 @@ public class SettingManager {
         bidIncreaseRatio = c.getDouble("bid-increase-percent", 25) / 100;
         minBINPrice = c.getDouble("min-bin", 1);
         minBIDPrice = c.getDouble("min-bid", 1);
-        FileConfiguration layout = ConfigManager.layout.get();
+        FileConfiguration layout = ConfigManager.layout.getCustomFile();
         soundClick = layout.getString("sounds.click", "UI_STONECUTTER_SELECT_RECIPE");
         soundOpenEnderchest = layout.getString("sounds.open-enderchest", "BLOCK_ENDER_CHEST_OPEN");
         soundCloseEnderchest = layout.getString("sounds.close-enderchest", "BLOCK_ENDER_CHEST_CLOSE");
@@ -99,7 +99,7 @@ public class SettingManager {
     private static void backwardsCompatibility() {
         FileConfiguration c = AuctionHouse.getPlugin().getConfig();
         c.set("plugin-version", AuctionHouse.getPlugin().getDescription().getVersion());
-        FileConfiguration messageFile = Messages.get();
+        FileConfiguration messageFile = M.get();
         if(c.contains("currency")) {
             messageFile.set("placeholders.currency-symbol", c.getString("currency"));
             c.set("currency", null);
@@ -120,7 +120,7 @@ public class SettingManager {
         if (c.contains("filler-item")) {
             Material material = Material.matchMaterial(c.getString("filler-item", "BLACK_STAINED_GLASS_PANE"));
             ItemStack fillerItem = material == null ? new ItemStack(Material.AIR) : new ItemStack(material);
-            ConfigManager.layout.get().set("filler-item", fillerItem);
+            ConfigManager.layout.getCustomFile().set("filler-item", fillerItem);
             ConfigManager.layout.save();
             ConfigManager.layout.reload();
             c.set("filler-item", null);
@@ -129,17 +129,17 @@ public class SettingManager {
             c.set("bin-auction-duration", c.get("auction-duration"));
             c.set("auction-duration", null);
         }
-        if (ConfigManager.permissions.get().contains("auction-duration")) {
-            ConfigManager.permissions.get().set("bin-auction-duration", ConfigManager.permissions.get().get("auction-duration"));
-            ConfigManager.permissions.get().set("auction-duration", null);
+        if (ConfigManager.permissions.getCustomFile().contains("auction-duration")) {
+            ConfigManager.permissions.getCustomFile().set("bin-auction-duration", ConfigManager.permissions.getCustomFile().get("auction-duration"));
+            ConfigManager.permissions.getCustomFile().set("auction-duration", null);
             ConfigManager.permissions.save();
             ConfigManager.permissions.reload();
         }
         if (Objects.equals(messageFile.getString("placeholders.currency-symbol"), " §ecoins")) {
             messageFile.set("placeholders.currency-symbol", " coins");
         }
-        Messages.save();
-        Messages.reload();
+        M.save();
+        M.reload();
         AuctionHouse.getPlugin().saveConfig();
         AuctionHouse.getPlugin().reloadConfig();
     }

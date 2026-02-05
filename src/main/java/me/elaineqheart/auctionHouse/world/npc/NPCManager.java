@@ -11,7 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 import org.bukkit.persistence.PersistentDataType;
 
-public class CreateNPC{
+public class NPCManager {
 
     public static void createAuctionMaster(Location loc, String facing) {
         World world = loc.getWorld();
@@ -74,6 +74,10 @@ public class CreateNPC{
         Villager npc = (Villager) stand.getPassengers().getFirst();
         npc.remove();
         stand.remove();
+    }
+
+    public static boolean isNPC(Entity entity) {
+        return entity.getPersistentDataContainer().has(new NamespacedKey(AuctionHouse.getPlugin(), "auction_master"));
     }
 
 }

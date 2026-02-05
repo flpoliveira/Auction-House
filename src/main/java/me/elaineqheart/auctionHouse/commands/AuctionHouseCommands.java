@@ -21,7 +21,7 @@ import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;
 import me.elaineqheart.auctionHouse.world.displays.CreateDisplay;
 import me.elaineqheart.auctionHouse.world.displays.UpdateDisplay;
-import me.elaineqheart.auctionHouse.world.npc.CreateNPC;
+import me.elaineqheart.auctionHouse.world.npc.NPCManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -256,7 +256,7 @@ public class AuctionHouseCommands implements CommandExecutor, TabCompleter {
                             p.sendMessage(Messages.getFormatted("command-feedback.npc-usage"));
                             return true;
                         }
-                        CreateNPC.createAuctionMaster(middleBlockLoc, strings[3]);
+                        NPCManager.createAuctionMaster(middleBlockLoc, strings[3]);
                     } else if(strings[1].equals(Messages.getFormatted("commands.display"))) {
                         if(strings.length < 4) {
                             p.sendMessage(Messages.getFormatted("command-feedback.display-usage"));

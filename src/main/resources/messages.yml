@@ -507,6 +507,7 @@ command-feedback:
   npc-usage: "/ah summon npc facing <direction>"
   display-usage: "/ah summon display <sort type> <item rank>"
   no-space-for-display: "§eThere is already a display here. Please remove it first."
+  no-air-space-for-display: "§eThere is not enough space to spawn a display. Please destroy the surrounding blocks first."
   blacklist-usage: "§eUsage: /ah blacklist add <type> <text>&n§rFor <exact> and <material> you don't need <text>, but hold an item in your hand"
   blacklist-undo: "Successfully removed the last rule"
   blacklist-undo-error: "There are no rules"

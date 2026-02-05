@@ -17,8 +17,8 @@ public class DynamicCommandRegisterer {
         String name = Messages.getFormatted("commands.ah").toLowerCase();
         String alias = Messages.getFormatted("commands.alias").toLowerCase();
         List<String> aliases = alias.isEmpty() ? List.of() : List.of(alias);
-        CommandExecutor executor = new AuctionHouseCommands();
-        TabCompleter tabCompleter = new AuctionHouseCommands();
+        CommandExecutor executor = new AuctionHouseCommand();
+        TabCompleter tabCompleter = new AuctionHouseCommand();
 
         try {
             Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");

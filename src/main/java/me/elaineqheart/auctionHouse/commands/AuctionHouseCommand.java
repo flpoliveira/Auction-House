@@ -44,7 +44,7 @@ import java.util.UUID;
 
 // #don't try to fix what's not broken
 
-public class AuctionHouseCommands implements CommandExecutor, TabCompleter {
+public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if(commandSender instanceof ConsoleCommandSender) {
@@ -280,8 +280,12 @@ public class AuctionHouseCommands implements CommandExecutor, TabCompleter {
                                 return true;
                             }
                         }
+                        if(CreateDisplay.notEnoughSpace(loc)) {
+                            p.sendMessage(Messages.getFormatted("command-feedback.no-air-space-for-display"));
+                            return true;
+                        }
                         if(strings[2].equals(Messages.getFormatted("commands.highest_price"))) {
-                            CreateDisplay.createDisplayHighestPrice(blockLoc, itemNumber);
+                                CreateDisplay.createDisplayHighestPrice(blockLoc, itemNumber);
                         } else if (strings[2].equals(Messages.getFormatted("commands.ending_soon"))) {
                             CreateDisplay.createDisplayEndingSoon(blockLoc, itemNumber);
                         } else {

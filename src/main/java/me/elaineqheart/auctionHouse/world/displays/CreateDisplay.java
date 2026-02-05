@@ -90,4 +90,13 @@ public class CreateDisplay {
         loc.add(0,0,-1);
     }
 
+    public static boolean notEnoughSpace(Location loc) {
+        if (!loc.getBlock().isEmpty()) return true;
+        if (!loc.add(0,0,1).getBlock().isEmpty()) return true;
+        if (!loc.add(0,0,-2).getBlock().isEmpty()) return true;
+        if (!loc.add(1,0,1).getBlock().isEmpty()) return true;
+        if (!loc.add(-2,0,0).getBlock().isEmpty()) return true;
+        return !loc.add(1, 1, 0).getBlock().isEmpty();
+    }
+
 }

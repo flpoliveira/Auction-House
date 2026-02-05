@@ -245,3 +245,4 @@ sounds:
   villager-deny: "ENTITY_VILLAGER_NO"
   open-shulker: "BLOCK_SHULKER_BOX_OPEN"
   close-shulker: "BLOCK_SHULKER_BOX_CLOSE"
+  npc-click: "UI_STONECUTTER_SELECT_RECIPE"

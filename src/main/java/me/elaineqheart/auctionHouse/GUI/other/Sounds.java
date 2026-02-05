@@ -38,6 +38,10 @@ public class Sounds {
         p.playSound(p.getLocation(), getSound(SettingManager.soundClick), 0.2f,1);
     }
 
+    public static void npcClick(Player p) {
+        p.playSound(p.getLocation(), getSound(SettingManager.soundNPCClick), 0.5f,1);
+    }
+
 
     private static void playSound(InventoryClickEvent event, String soundName, float volume, float pitch) {
         try {

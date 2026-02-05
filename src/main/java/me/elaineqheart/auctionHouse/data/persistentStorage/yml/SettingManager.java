@@ -43,6 +43,7 @@ public class SettingManager {
     public static String soundVillagerDeny;
     public static String soundOpenShulker;
     public static String soundCloseShulker;
+    public static String soundNPCClick;
 
     static {
         loadData();
@@ -84,6 +85,7 @@ public class SettingManager {
         soundVillagerDeny = layout.getString("sounds.villager-deny", "ENTITY_VILLAGER_NO");
         soundOpenShulker = layout.getString("sounds.open-shulker", "BLOCK_SHULKER_BOX_OPEN");
         soundCloseShulker = layout.getString("sounds.close-shulker", "BLOCK_SHULKER_BOX_CLOSE");
+        soundNPCClick = layout.getString("sounds.npc-click", "UI_STONECUTTER_SELECT_RECIPE");
         if(ConfigManager.backwardsCompatibility()) backwardsCompatibility();
     }
 

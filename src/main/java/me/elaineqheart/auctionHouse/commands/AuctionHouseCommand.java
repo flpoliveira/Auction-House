@@ -8,7 +8,7 @@ import me.elaineqheart.auctionHouse.GUI.impl.CollectSoldItemGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.Blacklist;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
@@ -471,6 +471,5 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
         }
         SettingManager.loadData();
         UpdateDisplay.reload();
-        M.reload();
     }
 }

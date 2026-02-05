@@ -1,6 +1,7 @@
 package me.elaineqheart.auctionHouse.data.persistentStorage.local;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -138,8 +139,8 @@ public class SettingManager {
         if (Objects.equals(messageFile.getString("placeholders.currency-symbol"), " §ecoins")) {
             messageFile.set("placeholders.currency-symbol", " coins");
         }
-        M.save();
-        M.reload();
+        ConfigManager.messages.save();
+        ConfigManager.messages.reload();
         AuctionHouse.getPlugin().saveConfig();
         AuctionHouse.getPlugin().reloadConfig();
     }

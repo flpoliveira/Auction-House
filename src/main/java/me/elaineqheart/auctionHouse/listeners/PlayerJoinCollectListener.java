@@ -2,7 +2,7 @@ package me.elaineqheart.auctionHouse.listeners;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.impl.CollectSoldItemGUI;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.ram.AuctionHouseStorage;
 import me.elaineqheart.auctionHouse.data.ram.ItemNote;

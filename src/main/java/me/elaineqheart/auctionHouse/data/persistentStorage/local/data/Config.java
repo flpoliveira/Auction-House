@@ -16,8 +16,10 @@ public class Config {
 
     private File file;
     private FileConfiguration customFile;
+    private String fileName;
 
     public void setup(String fileName, boolean copyDefaults, String parent){
+        this.fileName = fileName;
         if(ConfigManager.backwardsCompatibility() && !parent.isEmpty()) backwardsCompatibility(fileName, parent);
         file = new File(AuctionHouse.getPlugin().getDataFolder() + parent,  fileName);
 
@@ -30,18 +32,14 @@ public class Config {
         }
         customFile = YamlConfiguration.loadConfiguration(file);
 
-        if(!copyDefaults) {
-            save();
-            setup();
-            return;
+        if(copyDefaults) {
+            final InputStream defConfigStream = AuctionHouse.getPlugin().getResource(parent + fileName);
+            if (defConfigStream != null) {
+                customFile.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, Charsets.UTF_8)));
+                customFile.options().copyDefaults(true);
+            }
         }
-        final InputStream defConfigStream = AuctionHouse.getPlugin().getResource(parent + fileName + ".yml");
-        if (defConfigStream == null) {
-            setup();
-            return;
-        }
-        customFile.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, Charsets.UTF_8)));
-        customFile.options().copyDefaults(true);
+
         save();
         setup();
     }
@@ -60,7 +58,7 @@ public class Config {
         try {
             customFile.save(file);
         }catch (IOException e){
-            AuctionHouse.getPlugin().getLogger().severe("Couldn't save displays.yml file");
+            AuctionHouse.getPlugin().getLogger().severe("Couldn't save " + fileName + " file");
         }
     }
 
@@ -72,8 +70,8 @@ public class Config {
     public void reloadChild() {}
 
     private void backwardsCompatibility(String fileName, String parent) {
-        File file = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + parent + "/" + fileName + ".yml");
-        File old = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + "/" + fileName + ".yml");
+        File file = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + parent + "/" + fileName);
+        File old = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + "/" + fileName);
         if (old.exists()) {
             try {
                 Files.copy(old.getAbsoluteFile().toPath(), file.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);

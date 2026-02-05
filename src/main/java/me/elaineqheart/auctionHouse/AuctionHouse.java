@@ -5,7 +5,6 @@ import me.elaineqheart.auctionHouse.GUI.GUIManager;
 import me.elaineqheart.auctionHouse.GUI.other.AnvilGUIManager;
 import me.elaineqheart.auctionHouse.commands.DynamicCommandRegisterer;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.listeners.AhConfigurationListener;
 import me.elaineqheart.auctionHouse.listeners.PlayerJoinCollectListener;
@@ -57,9 +56,6 @@ public final class AuctionHouse extends JavaPlugin {
 
         ConfigManager.setupConfigs();
 
-        M.setup();
-        M.get().options().copyDefaults(true);
-        M.save();
 
         //if(SettingManager.useRedis) RedisManager.connect();
 

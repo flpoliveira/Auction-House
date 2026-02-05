@@ -1,6 +1,7 @@
 package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.OldLayout;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.*;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class ConfigManager {
 
+    public static M messages = new M();
     public static Config displays = new Config();
     public static BannedPlayers bannedPlayers = new BannedPlayers();
     public static Permissions permissions = new Permissions();
@@ -29,6 +31,7 @@ public class ConfigManager {
         AuctionHouse.getPlugin().reloadConfig();
         AuctionHouse.getPlugin().getConfig().options().copyDefaults(true);
         AuctionHouse.getPlugin().saveConfig();
+        messages.setup("messages.yml", true, "");
         displays.setup("displays.yml", false, "/data");
         displaysBackwardsCompatibility();
         bannedPlayers.setup("bannedPlayers.yml", false, "/data");
@@ -57,7 +60,7 @@ public class ConfigManager {
     }
 
     private static List<Config> getList() {
-        if(list.isEmpty()) list.addAll(List.of(displays, bannedPlayers, permissions, blacklist, categories, playerPreferences, layout, transactionLogger));
+        if(list.isEmpty()) list.addAll(List.of(messages, displays, bannedPlayers, permissions, blacklist, categories, playerPreferences, layout, transactionLogger));
         return list;
     }
 

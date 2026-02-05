@@ -1,6 +1,6 @@
 package me.elaineqheart.auctionHouse.data;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

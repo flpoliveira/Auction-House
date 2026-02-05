@@ -1,7 +1,7 @@
 package me.elaineqheart.auctionHouse.commands;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.M;
+import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;

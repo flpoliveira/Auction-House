@@ -61,16 +61,16 @@ public class UpdateDisplay implements Runnable{
                         return;
                     }
 
-                    String price = StringUtils.getPriceTrimmed(note.getPrice());
                     String time = StringUtils.getTimeTrimmed(note.getTimeLeft());
                     String playerName = note.getPlayerName();
                     ItemStack item = note.getItem();
 
                     //update the signs
                     for (Sign sign : signs) {
-                        sign.getSide(Side.FRONT).setLine(0, ChatColor.GOLD + ChatColor.stripColor(StringUtils.formatPrice(price)));
-                        sign.getSide(Side.FRONT).setLine(1, ChatColor.YELLOW + time);
-                        sign.getSide(Side.FRONT).setLine(3, M.getFormatted("world.displays.sign-interaction"));
+                        sign.getSide(Side.FRONT).setLine(0, M.getFormatted("world.displays.line-0", note.getPrice(), "%time%", time));
+                        sign.getSide(Side.FRONT).setLine(1, M.getFormatted("world.displays.line-1", note.getPrice(), "%time%", time));
+                        sign.getSide(Side.FRONT).setLine(2, M.getFormatted("world.displays.line-2", note.getPrice(), "%time%", time));
+                        sign.getSide(Side.FRONT).setLine(3, M.getFormatted("world.displays.line-3", note.getPrice(), "%time%", time));
                         sign.update(true, false);
                     }
 
@@ -109,10 +109,10 @@ public class UpdateDisplay implements Runnable{
                             data.text.setVisibleByDefault(true);
                             if(data.type.equals("highest_price")) {
                                 data.text.setText(ChatColor.YELLOW + "#" + rank + " " + ChatColor.RESET + name + ChatColor.GRAY + "\n" +
-                                        M.getFormatted("world.displays.by-player") + playerName);
+                                        M.getFormatted("world.displays.by-player", "%player%", playerName));
                             } else if(data.type.equals("ending_soon")) {
                                 data.text.setText(ChatColor.GREEN + "#" + rank + " " + ChatColor.RESET + name + ChatColor.GRAY + "\n" +
-                                        M.getFormatted("world.displays.by-player")+ playerName);
+                                        M.getFormatted("world.displays.by-player", "%player%", playerName));
                             }
 
                             data.text.getPersistentDataContainer().set(new NamespacedKey(AuctionHouse.getPlugin(), "display_text"), PersistentDataType.BOOLEAN, true);

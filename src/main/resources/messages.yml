@@ -438,8 +438,11 @@ items:
 world:
   npc: "§6Auction Master"
   displays:
-    sign-interaction: "§d[CLICK]"
-    by-player: "by: "
+    line-0: "%price-trim%"
+    line-1: "§e%time%"
+    line-2: ""
+    line-3: "§d[CLICK]"
+    by-player: "by: %player%"
 
 commands:
   ah: "ah"

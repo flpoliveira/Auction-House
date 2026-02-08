@@ -139,6 +139,14 @@ public class SettingManager {
         if (Objects.equals(messageFile.getString("placeholders.currency-symbol"), " §ecoins")) {
             messageFile.set("placeholders.currency-symbol", " coins");
         }
+        if (messageFile.contains("world.displays.sign-interaction")) {
+            messageFile.set("world.displays.line-3", messageFile.get("world.displays.sign-interaction"));
+            messageFile.set("world.displays.sign-interaction", null);
+            String by = messageFile.getString("world.displays.by-player");
+            if(by != null && !by.contains("%player%")) {
+                messageFile.set("world.displays.by-player", messageFile.get("world.displays.by-player") + "%player%");
+            }
+        }
         ConfigManager.messages.save();
         ConfigManager.messages.reload();
         AuctionHouse.getPlugin().saveConfig();

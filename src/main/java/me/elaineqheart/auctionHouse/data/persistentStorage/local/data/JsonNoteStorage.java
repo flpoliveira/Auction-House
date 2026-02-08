@@ -68,6 +68,8 @@ public class JsonNoteStorage {
         File file = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + "/data/notes.json");
         File old = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + "/notes.json");
         if (old.exists()) {
+            file.getParentFile().mkdir();
+            file.createNewFile();
             Files.copy(old.getAbsoluteFile().toPath(), file.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
             old.delete();
         }

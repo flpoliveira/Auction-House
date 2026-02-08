@@ -20,16 +20,17 @@ public class Config {
 
     public void setup(String fileName, boolean copyDefaults, String parent){
         this.fileName = fileName;
-        if(ConfigManager.backwardsCompatibility() && !parent.isEmpty()) backwardsCompatibility(fileName, parent);
         file = new File(AuctionHouse.getPlugin().getDataFolder() + parent,  fileName);
 
         if (!file.exists()){
             try{
+                file.getParentFile().mkdirs();
                 file.createNewFile();
             }catch (IOException e){
                 //uwu
             }
         }
+        if(ConfigManager.backwardsCompatibility() && !parent.isEmpty()) backwardsCompatibility(fileName, parent);
         customFile = YamlConfiguration.loadConfiguration(file);
 
         if(copyDefaults) {
@@ -73,6 +74,7 @@ public class Config {
         File file = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + parent + "/" + fileName);
         File old = new File(AuctionHouse.getPlugin().getDataFolder().getAbsolutePath() + "/" + fileName);
         if (old.exists()) {
+
             try {
                 Files.copy(old.getAbsoluteFile().toPath(), file.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
                 old.delete();

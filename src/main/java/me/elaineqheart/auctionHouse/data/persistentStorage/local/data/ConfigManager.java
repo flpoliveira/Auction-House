@@ -1,7 +1,6 @@
 package me.elaineqheart.auctionHouse.data.persistentStorage.local.data;
 
 import me.elaineqheart.auctionHouse.AuctionHouse;
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.M;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.OldLayout;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.*;
 import org.bukkit.Bukkit;
@@ -33,7 +32,6 @@ public class ConfigManager {
         AuctionHouse.getPlugin().saveConfig();
         messages.setup("messages.yml", true, "");
         displays.setup("displays.yml", false, "/data");
-        displaysBackwardsCompatibility();
         bannedPlayers.setup("bannedPlayers.yml", false, "/data");
         permissions.setup("permissions.yml", true, "");
         blacklist.setup("blacklist.yml", false, "/data");
@@ -46,11 +44,13 @@ public class ConfigManager {
             if (!layout.getCustomFile().getBoolean("old-layout")) OldLayout.saveOldLayout();
         }
         transactionLogger.setup(transactionLogger.getName(), false, "/logs");
+        Bukkit.getScheduler().runTask(AuctionHouse.getPlugin(), ConfigManager::displaysBackwardsCompatibility);
         permissionsSetup();
     }
 
     public static boolean backwardsCompatibility() {
         FileConfiguration c = AuctionHouse.getPlugin().getConfig();
+        if(c.getString("plugin-version") == null) return true;
         return !Objects.equals(c.getString("plugin-version"), AuctionHouse.getPlugin().getDescription().getVersion());
     }
 

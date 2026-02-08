@@ -1,6 +1,5 @@
 package me.elaineqheart.auctionHouse.listeners;
 
-import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.PlayerPreferences;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.AhConfiguration;
 import org.bukkit.entity.Player;

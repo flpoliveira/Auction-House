@@ -4,7 +4,6 @@ import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.Config;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
 import me.elaineqheart.auctionHouse.data.ram.ItemManager;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;

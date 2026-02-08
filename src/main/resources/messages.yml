@@ -477,6 +477,7 @@ commands:
   test: "test"
   save-item-to-layout-file: "saveitemtolayout.yml"
   about: "about"
+  help: "help"
 
 command-feedback:
   usage: "§eUsage: /ah sell <price> <amount>"
@@ -523,6 +524,20 @@ command-feedback:
   item-saved-to-layout-file: "Item from main hand saved in layout.yml under \"test\""
   min-bid: "Your starting bid must be at least %price%!"
   min-bin: "The item price must be at least %price%!"
+  help-prefix: "§7§l--------------[ §dAuction House Help§7§l ]--------------"
+  help:
+    about: "§6/ah about:§f Displays information about the author"
+    sell: "§6/ah sell:§f Create a BIN auction with the item in your main hand"
+    bid: "§6/ah bid:§f Creates a BID auction with the item in your main hand"
+    announce: "§6/ah announce:§f Toggles auction announcements for the player"
+    admin: "§6/ah admin:§f Used to cancel or delete auctions"
+    ban: "§6/ah ban:§f Adds somebody to the banlist, making them unable to open or use the ah"
+    pardon: "§6/ah pardon:§f Removes a player from the banlist"
+    blacklist: "§6/ah blacklist:§f Adds items to the blacklist, which cannot be auctioned"
+    reload: "§6/ah reload:§f Updates any changes made to the files"
+    summon: "§6/ah summon:§f Summons the auction master npc or the item displays. Remove them by punching them in creative mode while being op"
+    test: "§6/ah test:§f Used to save the item from your main hand to the files"
+    help: "§6/ah help:§f Shows the help menu"
 
 placeholders:
   number: "§6%input%§r"

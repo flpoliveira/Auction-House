@@ -31,10 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 // https://github.com/VelixDevelopments/Imperat
 
@@ -59,12 +56,27 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(p), p);
             }
             if(strings.length==1 && strings[0].equals(M.getFormatted("commands.about"))) {
-                p.sendMessage("§6> §7§l----------------[ §dAuction House§7 ]----------------");
-                p.sendMessage("§6> §7Made by:§e ElaineQheart");
-                p.sendMessage("§6> §7Contact:§e https://discord.gg/ePTwfDK6AY");
-                p.sendMessage("§6> §7Plugin Version:§e " + AuctionHouse.getPlugin().getDescription().getVersion());
-                p.sendMessage("§6> §7A free Auction House Plugin made with lots of dedication");
-                p.sendMessage("§6> §7§l----------------[ §dAuction House§7 ]----------------");
+                p.sendMessage("§6> §7§l---------------[ §dAuction House§7§l ]---------------");
+                p.sendMessage("§6> §7Made by:§6 ElaineQheart");
+                p.sendMessage("§6> §7Plugin Version:§6 " + AuctionHouse.getPlugin().getDescription().getVersion());
+                p.sendMessage("§6> §7Contact:§e§n https://discord.gg/ePTwfDK6AY");
+                p.sendMessage("§6> §e§nhttps://www.spigotmc.org/threads/auction-house.690682/");
+                p.sendMessage("§6>");
+                //p.sendMessage("§6> §7You are told to be patient - so the thief has time to flee");
+                //p.sendMessage("§6> §7The proletarians have nothing to lose but their chains");
+                p.sendMessage("§6> §7§l---------------[ §dAuction House§7§l ]---------------");
+            }
+            if(strings.length==1 && strings[0].equals(M.getFormatted("commands.help"))) {
+                p.sendMessage(M.getFormatted("command-feedback.help-prefix"));
+                List<String> commands = Objects.requireNonNull(M.get().getConfigurationSection("command-feedback.help")).getKeys(false).stream().sorted().toList();
+                for(String cm : commands) {
+                    String message = M.getFormatted("command-feedback.help." + cm);
+                    if(cm.equals(M.getFormatted("commands.sell")) && !SettingManager.BINAuctions) continue;
+                    if(cm.equals(M.getFormatted("commands.bid")) && !SettingManager.BIDAuctions) continue;
+                    if(cm.equals(M.getFormatted("commands.announce")) && !SettingManager.auctionAnnouncementsEnabled) continue;
+                    if(adminCommands().contains(cm) && !p.hasPermission(SettingManager.permissionModerate)) continue;
+                    p.sendMessage(message);
+                }
             }
             if(strings.length==1 && strings[0].equals(M.getFormatted("commands.sell")) && SettingManager.BINAuctions) {
                 p.sendMessage(M.getFormatted("command-feedback.usage"));
@@ -367,18 +379,11 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             //check for every item if it's half typed out, then add accordingly to the params list
             List<String> assetParams = new ArrayList<>();
             assetParams.add(M.getFormatted("commands.about"));
+            assetParams.add(M.getFormatted("commands.help"));
             if(SettingManager.BINAuctions) assetParams.add(M.getFormatted("commands.sell"));
             if(SettingManager.BIDAuctions) assetParams.add(M.getFormatted("commands.bid"));
             if(SettingManager.auctionAnnouncementsEnabled) assetParams.add(M.getFormatted("commands.announce"));
-            if(commandSender.hasPermission(SettingManager.permissionModerate)) {
-                assetParams.add(M.getFormatted("commands.admin"));
-                assetParams.add(M.getFormatted("commands.ban"));
-                assetParams.add(M.getFormatted("commands.pardon"));
-                assetParams.add(M.getFormatted("commands.reload"));
-                assetParams.add(M.getFormatted("commands.summon"));
-                assetParams.add(M.getFormatted("commands.blacklist"));
-                assetParams.add(M.getFormatted("commands.test"));
-            }
+            if(commandSender.hasPermission(SettingManager.permissionModerate)) assetParams.addAll(adminCommands());
             for (String p : assetParams) {
                 if (p.indexOf(strings[0]) == 0){
                     params.add(p);
@@ -468,5 +473,17 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
         }
         SettingManager.loadData();
         UpdateDisplay.reload();
+    }
+
+    private static List<String> adminCommands() {
+        List<String> commandsList = new ArrayList<>();
+        commandsList.add(M.getFormatted("commands.admin"));
+        commandsList.add(M.getFormatted("commands.ban"));
+        commandsList.add(M.getFormatted("commands.pardon"));
+        commandsList.add(M.getFormatted("commands.reload"));
+        commandsList.add(M.getFormatted("commands.summon"));
+        commandsList.add(M.getFormatted("commands.blacklist"));
+        commandsList.add(M.getFormatted("commands.test"));
+        return commandsList;
     }
 }

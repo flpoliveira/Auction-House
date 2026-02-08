@@ -170,6 +170,7 @@ public class UpdateDisplay implements Runnable{
             data.location = loc;
             //get the block display
             retrieveData(loc,data);
+            if(data.itemEntity != null) data.itemEntity.remove();
             locations.put(loc, Integer.parseInt(key));
             displays.put(Integer.parseInt(key), data);
         }

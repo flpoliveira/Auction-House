@@ -59,8 +59,7 @@ public class Sounds {
     }
 
     private static Sound getSound(String name) {
-        if(!
-                ConfigManager.oldVersion21()) return Sound.valueOf(name);
+        if(!ConfigManager.oldVersion21()) return Sound.valueOf(name);
         Sound sound;
         switch (name) {
             case "BLOCK_ENDER_CHEST_OPEN" -> sound = Sound.BLOCK_ENDER_CHEST_OPEN;

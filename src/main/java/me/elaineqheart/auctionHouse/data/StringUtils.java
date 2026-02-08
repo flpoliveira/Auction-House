@@ -128,4 +128,16 @@ public class StringUtils {
         }
     }
 
+    public static String getPriceTrimmed(double price) {
+        if (price < 1000) {
+            return String.valueOf(price);
+        } else if (price < 1000000) {
+            return String.format("%.1fK", price / 1000.0);
+        } else if (price < 1000000000) {
+            return String.format("%.1fM", price / 1000000.0);
+        } else {
+            return String.format("%.1fB", price / 1000000000.0);
+        }
+    }
+
 }

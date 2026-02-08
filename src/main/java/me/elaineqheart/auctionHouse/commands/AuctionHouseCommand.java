@@ -98,12 +98,10 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 if (strings[0].equals(M.getFormatted("commands.sell")) && price < SettingManager.minBINPrice) {
-                    p.sendMessage(M.getFormatted("command-feedback.min-bin",
-                            "%price%", StringUtils.formatNumberPlain(SettingManager.minBINPrice) + M.getFormatted("placeholders.currency-symbol")));
+                    p.sendMessage(M.getFormatted("command-feedback.min-bin", SettingManager.minBINPrice));
                     return true;
                 } else if (strings[0].equals(M.getFormatted("commands.bid")) && price < SettingManager.minBIDPrice) {
-                    p.sendMessage(M.getFormatted("command-feedback.min-bid",
-                            "%price%", StringUtils.formatNumberPlain(SettingManager.minBIDPrice) + M.getFormatted("placeholders.currency-symbol")));
+                    p.sendMessage(M.getFormatted("command-feedback.min-bid", SettingManager.minBIDPrice));
                     return true;
                 }
                 int amount = item.getAmount();
@@ -125,16 +123,15 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 inputItem.setAmount(amount);
                 ItemNoteStorage.createNote(p, inputItem, price, strings[0].equals(M.getFormatted("commands.bid")));
                 item.setAmount(item.getAmount() - amount);
-                p.sendMessage(M.getFormatted("command-feedback.auction", "%price%", StringUtils.formatPrice(price)));
+                p.sendMessage(M.getFormatted("command-feedback.auction", price));
                 
                 // Announce the new auction to all players who have announcements enabled
                 if(SettingManager.auctionAnnouncementsEnabled) {
                     String itemName = StringUtils.getItemName(inputItem);
-                    String announcement = M.getFormatted("chat.auction-announcement",
+                    String announcement = M.getFormatted("chat.auction-announcement", price,
                             "%player%", p.getDisplayName(),
                             "%item%", itemName,
-                            "%amount%", String.valueOf(amount),
-                            "%price%", StringUtils.formatPrice(price));
+                            "%amount%", String.valueOf(amount));
                     Bukkit.getScheduler().runTaskLater(AuctionHouse.getPlugin(), () -> {
                         for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                             if(ConfigManager.playerPreferences.hasAnnouncementsEnabled(onlinePlayer.getUniqueId()) && !onlinePlayer.equals(p)) {

@@ -542,11 +542,9 @@ public class ItemManager {
             meta.setLore(M.getLoreList("items.submit-bid.lore", amount));
         } else {
             meta.setItemName(M.getFormatted("items.submit-another-bid.name", amount));
-            meta.setLore(M.getLoreList("items.submit-another-bid.lore", amount,
-                    "%price2%", StringUtils.formatPrice(previousBid),
-                    "%number2%", StringUtils.formatNumber(previousBid),
-                    "%price3%", StringUtils.formatPrice(amount - previousBid),
-                    "%number3%", StringUtils.formatNumber(amount - previousBid)));
+            List<String> lore = M.getLoreList("items.submit-another-bid.lore");
+            lore.replaceAll(s -> M.replace(s, amount, previousBid, amount-previousBid));
+            meta.setLore(lore);
         }
         item.setItemMeta(meta);
         return item;
@@ -574,9 +572,9 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.setItemName(M.getFormatted("items.top-bid.name", amount));
-        meta.setLore(M.getLoreList("items.top-bid.lore", amount,
-                "%price2%", StringUtils.formatPrice(newBid),
-                "%number2%", StringUtils.formatNumber(newBid)));
+        List<String> lore = M.getLoreList("items.top-bid.lore");
+        lore.replaceAll(s -> M.replace(s, amount, newBid));
+        meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
     }
@@ -615,10 +613,10 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.setItemName(M.getFormatted("items.collect-coins.name"));
-        meta.setLore(M.getLoreList("items.collect-coins.lore", note.getBidHistoryList().getLast().getPrice(),
-                "%price2%", StringUtils.formatPrice(note.getBid(p)),
-                "%number2%", StringUtils.formatNumber(note.getBid(p)),
-                "%player%", note.getLastBidderName()));
+        List<String> lore = M.getLoreList("items.collect-coins.lore", note.getBidHistoryList().getLast().getPrice(),
+                "%player%", note.getLastBidderName());
+        lore.replaceAll(s -> M.replace(s, note.getBidHistoryList().getLast().getPrice(), note.getBid(p)));
+        meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
     }

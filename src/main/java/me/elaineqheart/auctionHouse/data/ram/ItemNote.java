@@ -130,15 +130,6 @@ public class ItemNote {
     public UUID getPlayerUUID() {return playerUUID;}
     public Date getDateCreated() {return dateCreated;}
     public double getPrice() {return price;}
-    public String getPriceTrimmed() {
-        if(price < 1000) {
-            return String.valueOf(price);
-        } else if(price < 1000000) {
-            return String.format("%.1fK", price / 1000.0);
-        } else {
-            return String.format("%.1fM", price / 1000000.0);
-        }
-    }
     public boolean isSold() {return isSold;}
     public boolean isOnAuction() {return !isSold || partiallySoldAmountLeft != 0;} //NOT INCLUDING EXPIRED
     public int getPartiallySoldAmountLeft() {return partiallySoldAmountLeft;}

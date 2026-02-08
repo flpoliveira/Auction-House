@@ -61,7 +61,7 @@ public class UpdateDisplay implements Runnable{
                         return;
                     }
 
-                    String price = note.getPriceTrimmed();
+                    String price = StringUtils.getPriceTrimmed(note.getPrice());
                     String time = StringUtils.getTimeTrimmed(note.getTimeLeft());
                     String playerName = note.getPlayerName();
                     ItemStack item = note.getItem();

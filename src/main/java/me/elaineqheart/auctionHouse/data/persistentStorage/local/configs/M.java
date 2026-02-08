@@ -47,8 +47,7 @@ public class M extends Config {
     public static String getFormatted(String key, double price, String... replacements) {
         String message = getValue(key,true);
         message = replacePlaceholders(key, message, replacements);
-        message = message.replace("%price%", StringUtils.formatPrice(price));
-        message = message.replace("%number%", StringUtils.formatNumber(price));
+        message = replace(message, price);
         return adventureApi(message);
     }
 
@@ -62,8 +61,7 @@ public class M extends Config {
     public static List<String> getLoreList(String key, double price, String... replacements) {
         String message = getValue(key,false);
         message = replacePlaceholders(key, message, replacements);
-        message = message.replace("%price%", StringUtils.formatPrice(price));
-        message = message.replace("%number%", StringUtils.formatNumber(price));
+        message = replace(message, price);
         List<String> list = Arrays.asList(message.split("&n"));
         list.replaceAll(M::adventureApi);
         return list;
@@ -75,6 +73,18 @@ public class M extends Config {
         }
         for (int i = 0; i < replacements.length; i += 2) {
             message = message.replace(replacements[i], replacements[i + 1]);
+        }
+        return message;
+    }
+
+    public static String replace(String message, double... prices) {
+        message = message.replace("%price%", StringUtils.formatPrice(prices[0]));
+        message = message.replace("%price-trim%", StringUtils.formatPrice(StringUtils.getPriceTrimmed(prices[0])));
+        message = message.replace("%number%", StringUtils.formatNumber(prices[0]));
+        for(int i = 2; i-1 < prices.length; i++) {
+            message = message.replace("%price"+i+"%", StringUtils.formatPrice(prices[i-1]));
+            message = message.replace("%price-trim"+i+"%", StringUtils.formatPrice(StringUtils.getPriceTrimmed(prices[i-1])));
+            message = message.replace("%number"+i+"%", StringUtils.formatNumber(prices[i-1]));
         }
         return message;
     }

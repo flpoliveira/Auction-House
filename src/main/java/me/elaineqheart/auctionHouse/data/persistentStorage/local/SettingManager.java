@@ -42,6 +42,8 @@ public class SettingManager {
     public static double bidIncreaseRatio;
     public static double minBINPrice;
     public static double minBIDPrice;
+    public static double maxBINPrice; // 0 = disabled
+    public static double maxBIDPrice; // 0 = disabled
     public static String soundClick;
     public static String soundOpenEnderchest;
     public static String soundCloseEnderchest;
@@ -90,6 +92,8 @@ public class SettingManager {
         bidIncreaseRatio = c.getDouble("bid-increase-percent", 25) / 100;
         minBINPrice = c.getDouble("min-bin", 1);
         minBIDPrice = c.getDouble("min-bid", 1);
+        maxBINPrice = c.getDouble("max-bin", 0);
+        maxBIDPrice = c.getDouble("max-bid", 0);
         FileConfiguration layout = ConfigManager.layout.getCustomFile();
         soundClick = layout.getString("sounds.click", "UI_STONECUTTER_SELECT_RECIPE");
         soundOpenEnderchest = layout.getString("sounds.open-enderchest", "BLOCK_ENDER_CHEST_OPEN");

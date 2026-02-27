@@ -6,6 +6,7 @@ import me.elaineqheart.auctionHouse.GUI.impl.AuctionViewGUI;
 import me.elaineqheart.auctionHouse.GUI.impl.CancelAuctionGUI;
 import me.elaineqheart.auctionHouse.GUI.impl.CollectSoldItemGUI;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
+import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
@@ -119,6 +120,14 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                     p.sendMessage(M.getFormatted("command-feedback.min-bid", SettingManager.minBIDPrice));
                     return true;
                 }
+                // Max price enforcement
+                if (strings[0].equals(M.getFormatted("commands.sell")) && SettingManager.maxBINPrice > 0 && price > SettingManager.maxBINPrice) {
+                    p.sendMessage(M.getFormatted("command-feedback.max-bin", SettingManager.maxBINPrice));
+                    return true;
+                } else if (strings[0].equals(M.getFormatted("commands.bid")) && SettingManager.maxBIDPrice > 0 && price > SettingManager.maxBIDPrice) {
+                    p.sendMessage(M.getFormatted("command-feedback.max-bid", SettingManager.maxBIDPrice));
+                    return true;
+                }
                 int amount = item.getAmount();
                 if(strings.length == 3) {
                     try {
@@ -187,6 +196,60 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             if(p.hasPermission(SettingManager.permissionModerate) && strings.length > 0) {
                 if(strings.length == 1 && strings[0].equals(M.getFormatted("commands.admin"))) {
                     AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(0, AuctionHouseGUI.Sort.HIGHEST_PRICE, "", p, true), p);
+                // /ah admin <player> list
+                } else if (strings.length == 3 && strings[0].equals(M.getFormatted("commands.admin"))
+                        && strings[2].equalsIgnoreCase(M.getFormatted("commands.list"))) {
+                    String targetName = strings[1];
+                    List<ItemNote> playerNotes = AuctionHouseStorage.getAll().stream()
+                            .filter(n -> n.getPlayerUUID() != null)
+                            .filter(n -> {
+                                String pn = n.getPlayerName();
+                                return pn != null && pn.equalsIgnoreCase(targetName);
+                            })
+                            .filter(n -> n.isOnAuction() && !n.isExpired())
+                            .toList();
+                    if (playerNotes.isEmpty()) {
+                        p.sendMessage(M.getFormatted("command-feedback.admin-list-empty", "%player%", targetName));
+                    } else {
+                        p.sendMessage(M.getFormatted("command-feedback.admin-list-header", "%player%", targetName));
+                        for (int i = 0; i < playerNotes.size(); i++) {
+                            ItemNote n = playerNotes.get(i);
+                            String entry = M.getFormatted("command-feedback.admin-list-entry",
+                                    "%index%", String.valueOf(i + 1),
+                                    "%item%", n.getItemName(),
+                                    "%price%", StringUtils.formatPrice(n.getPrice()),
+                                    "%id%", n.getNoteID().toString());
+                            p.sendMessage(entry);
+                        }
+                    }
+                    return true;
+                // /ah admin <player> delete <uuid>
+                } else if (strings.length == 4 && strings[0].equals(M.getFormatted("commands.admin"))
+                        && strings[2].equalsIgnoreCase(M.getFormatted("commands.delete"))) {
+                    String targetName = strings[1];
+                    UUID noteId;
+                    try {
+                        noteId = UUID.fromString(strings[3]);
+                    } catch (IllegalArgumentException e) {
+                        p.sendMessage(M.getFormatted("command-feedback.admin-player-usage"));
+                        return true;
+                    }
+                    ItemNote note = AuctionHouseStorage.getNote(noteId);
+                    if (note == null || !note.isOnAuction() || note.isExpired()
+                            || note.getPlayerName() == null || !note.getPlayerName().equalsIgnoreCase(targetName)) {
+                        p.sendMessage(M.getFormatted("command-feedback.admin-deleted-not-found", "%player%", targetName));
+                        return true;
+                    }
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.sendMessage(M.getFormatted("chat.inventory-full"));
+                        return true;
+                    }
+                    p.getInventory().addItem(note.getItem());
+                    ItemNoteStorage.deleteNote(note);
+                    p.sendMessage(M.getFormatted("command-feedback.admin-deleted-cmd",
+                            "%id%", noteId.toString(),
+                            "%player%", targetName));
+                    return true;
                 } else if (strings.length < 4 && strings[0].equals(M.getFormatted("commands.ban"))) {
                     p.sendMessage(M.getFormatted("command-feedback.ban-usage"));
                 } else if (strings.length != 2 && strings[0].equals(M.getFormatted("commands.pardon"))) {
@@ -392,7 +455,18 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                     params.add(p);
                 }
             }
-
+        }
+        if (strings.length == 2 && strings[0].equals(M.getFormatted("commands.admin"))) {
+            // Tab-complete player names for /ah admin <player>
+            for (Player on : Bukkit.getOnlinePlayers()) {
+                if (on.getName().toLowerCase().startsWith(strings[1].toLowerCase())) params.add(on.getName());
+            }
+        }
+        if (strings.length == 3 && strings[0].equals(M.getFormatted("commands.admin"))) {
+            // Tab-complete list/delete for /ah admin <player> <sub>
+            for (String sub : List.of(M.getFormatted("commands.list"), M.getFormatted("commands.delete"))) {
+                if (sub.startsWith(strings[2].toLowerCase())) params.add(sub);
+            }
         }
         if(strings.length == 2 && strings[0].equals(M.getFormatted("commands.ban"))) {
             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -465,6 +539,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
         }
         return params;
     }
+
 
 
     private static void reload() {

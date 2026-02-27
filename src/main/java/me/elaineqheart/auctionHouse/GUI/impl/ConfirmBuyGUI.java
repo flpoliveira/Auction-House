@@ -157,6 +157,10 @@ public class ConfirmBuyGUI extends InventoryGUI{
                             price,
                             item.getAmount(),
                             !note.isBIDAuction());
+                    Bukkit.getPluginManager().callEvent(new me.elaineqheart.auctionHouse.events.AuctionTransactionEvent(
+                            p, note.getPlayerName(), itemName,
+                            item.getType().name(), item, item.getAmount(), price,
+                            note.isBIDAuction()));
                 });
     }
     private InventoryButton cancel(){

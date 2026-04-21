@@ -1,5 +1,6 @@
 package me.elaineqheart.auctionHouse.data.ram;
 
+import me.elaineqheart.auctionHouse.data.StringUtils;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.configs.Blacklist;
 
@@ -95,7 +96,7 @@ public class AuctionHouseStorage {
     }
 
     public static List<ItemNote> getSortedList(ItemNoteStorage.SortMode mode, AhConfiguration c){
-        String search = c.getCurrentSearch();
+        String search = StringUtils.normalizeSearch(c.getCurrentSearch());
         List<UUID> list = new ArrayList<>();
         switch (mode) {
             case DATE -> list = sortedTimeLeft;
@@ -106,7 +107,7 @@ public class AuctionHouseStorage {
         return list.stream()
                 .map(notes::get)
                 .filter(note -> note.isOnAuction() && !note.isExpired() && !note.isOnWaitingList())
-                .filter(note -> search.isEmpty() || note.getSearchIndex(c.getPlayer()).contains(search.toLowerCase()))
+                .filter(note -> search.isEmpty() || StringUtils.normalizeSearch(note.getSearchIndex(c.getPlayer())).contains(search))
                 .filter(note -> switch (c.getBinFilter()) {
                     case ALL -> true;
                     case AUCTIONS_ONLY -> note.isBIDAuction();

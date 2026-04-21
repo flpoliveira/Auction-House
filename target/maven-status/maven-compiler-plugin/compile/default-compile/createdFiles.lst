@@ -3,7 +3,6 @@ me/elaineqheart/auctionHouse/listeners/PlayerJoinCollectListener.class
 me/elaineqheart/auctionHouse/data/persistentStorage/local/configs/Permissions.class
 me/elaineqheart/auctionHouse/GUI/impl/AuctionHouseGUI$Sort.class
 me/elaineqheart/auctionHouse/GUI/impl/AdminManageItemsGUI$1.class
-me/elaineqheart/auctionHouse/GUI/impl/AuctionHouseGUI$1.class
 me/elaineqheart/auctionHouse/data/persistentStorage/local/SettingManager.class
 me/elaineqheart/auctionHouse/data/persistentStorage/local/configs/BannedPlayers.class
 me/elaineqheart/auctionHouse/GUI/impl/AuctionHouseGUI.class
@@ -12,6 +11,7 @@ me/elaineqheart/auctionHouse/data/persistentStorage/local/OldLayout.class
 me/elaineqheart/auctionHouse/GUI/impl/CollectSoldItemGUI.class
 me/elaineqheart/auctionHouse/world/npc/NPCManager.class
 me/elaineqheart/auctionHouse/GUI/impl/AuctionViewGUI.class
+me/elaineqheart/auctionHouse/i18n/PtBrTranslations$1.class
 me/elaineqheart/auctionHouse/GUI/impl/AdminConfirmGUI.class
 me/elaineqheart/auctionHouse/world/displays/KillListener.class
 me/elaineqheart/auctionHouse/data/StringUtils.class
@@ -61,6 +61,7 @@ me/elaineqheart/auctionHouse/data/persistentStorage/ItemNoteStorage$SortMode.cla
 me/elaineqheart/auctionHouse/GUI/GUIManager.class
 me/elaineqheart/auctionHouse/commands/DynamicCommand.class
 me/elaineqheart/auctionHouse/GUI/impl/AuctionViewGUI$2.class
+me/elaineqheart/auctionHouse/i18n/PtBrTranslations.class
 me/elaineqheart/auctionHouse/data/ram/ItemNote$1.class
 me/elaineqheart/auctionHouse/vault/VaultHook.class
 me/elaineqheart/auctionHouse/data/ram/ItemManager.class

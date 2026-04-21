@@ -87,8 +87,6 @@ inventory-titles:
   collect-expired: "Collect Expired Item"
   collect-sold: "Collect Sold Item"
   my-auctions: "My Auctions"
-  anvil-search: "Search Item"
-  anvil-admin-search: "Admin Search Item"
   anvil-admin-expire-message: "Expire Item Reason"
   anvil-admin-delete-message: "Delete Item Reason"
   anvil-set-amount: "Set Amount"
@@ -109,14 +107,6 @@ items:
       &n
       &n§eRight-Click to skip!
       &n§aClick to turn the page!"
-  search:
-    name: "§aSearch"
-    lore: "§7Find Items by name, type or enchants
-      &n
-      &n§7Filter: %filter%
-      &n
-      &n§eRight-Click to clear!
-      &n§aClick to set filter!"
   locked-slot:
     name: "§cLocked Slot"
   refresh:
@@ -479,6 +469,7 @@ commands:
   save-item-to-layout-file: "saveitemtolayout.yml"
   about: "about"
   help: "help"
+  search: "search"
   list: "list"
   delete: "delete"
 
@@ -529,6 +520,7 @@ command-feedback:
   min-bin: "The item price must be at least %price%!"
   max-bin: "§cThe item price cannot exceed %price%!"
   max-bid: "§cThe starting bid cannot exceed %price%!"
+  search-usage: "§eUsage: /ah search <text>"
   admin-player-usage: "§eUsage: /ah admin <player> §7(to list) or §e/ah admin delete <id>"
   admin-list-empty: "§e%player% has no active auctions."
   admin-list-header: "§7--- Active auctions of §e%player% §7---"
@@ -549,6 +541,7 @@ command-feedback:
     summon: "§6/ah summon:§f Summons the auction master npc or the item displays. Remove them by punching them in creative mode while being op"
     test: "§6/ah test:§f Used to save the item from your main hand to the files"
     help: "§6/ah help:§f Shows the help menu"
+    search: "§6/ah search <text>:§f Opens the auction house filtered by text"
 
 placeholders:
   number: "§6%input%§r"

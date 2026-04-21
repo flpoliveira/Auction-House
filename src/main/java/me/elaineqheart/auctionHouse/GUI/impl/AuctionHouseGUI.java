@@ -3,7 +3,6 @@ package me.elaineqheart.auctionHouse.GUI.impl;
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.GUI.InventoryButton;
 import me.elaineqheart.auctionHouse.GUI.InventoryGUI;
-import me.elaineqheart.auctionHouse.GUI.other.AnvilHandler;
 import me.elaineqheart.auctionHouse.GUI.other.Sounds;
 import me.elaineqheart.auctionHouse.TaskManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
@@ -77,6 +76,9 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
     @Override
     public void onClose(InventoryCloseEvent event) {
         TaskManager.cancelTask(invID);
+        if(!c.getCurrentSearch().isEmpty()) {
+            c.setCurrentSearch("");
+        }
     }
 
     private void update() {
@@ -157,7 +159,6 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
                 int slot = i*9+j/2;
                 switch (places.get(i).charAt(j)) {
                     case '#' -> this.addButton(slot, fillerItem());
-                    case 's' -> this.addButton(slot, searchOption());
                     case 'o' -> this.addButton(slot, sortButton());
                     case 'p' -> this.addButton(slot, previousPage());
                     case 'n' -> this.addButton(slot, nextPage());
@@ -249,42 +250,6 @@ public class AuctionHouseGUI extends InventoryGUI implements Runnable {
                     if(event.isRightClick()) c.setCurrentPage(0); else c.setCurrentPage(c.getCurrentPage()-1);
                     Sounds.click(event);
                     update();
-                });
-    }
-    private InventoryButton searchOption(){
-        ItemStack item = c.getCurrentSearch().isEmpty() ? ConfigManager.layout.getItem("s") : ConfigManager.layout.getItem("active-search");
-        ItemMeta meta = item.getItemMeta();
-        assert meta != null;
-        meta.setItemName(M.getFormatted("items.search.name"));
-        meta.setLore(M.getLoreList("items.search.lore", "%filter%", c.getCurrentSearch()));
-        item.setItemMeta(meta);
-        return new InventoryButton()
-                .creator(player -> item)
-                .consumer(event -> {
-                    if(event.isRightClick()){
-                        //clear filter
-                        Sounds.breakWood(event);
-                        c.setCurrentSearch("");
-                        c.setCurrentPage(0);
-                        update();
-                    }else {
-                        Sounds.click(event);
-                        AnvilHandler handler = new AnvilHandler() {
-                            public void execute(Player p, String typedText) {
-                                c.setCurrentSearch(typedText);
-                                AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(c), p);
-                            }
-                            public void onClose(Player p) {
-                                Bukkit.getScheduler().runTaskLater(AuctionHouse.getPlugin(), () ->
-                                        AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(c), c.getPlayer()),1);
-                            }
-                        };
-                        if(c.isAdmin()){
-                            AuctionHouse.getAnvilManager().open(c.getPlayer(), "inventory-titles.anvil-admin-search", handler);
-                        }else {
-                            AuctionHouse.getAnvilManager().open(c.getPlayer(), "inventory-titles.anvil-search", handler);
-                        }
-                    }
                 });
     }
     private InventoryButton sortButton(){

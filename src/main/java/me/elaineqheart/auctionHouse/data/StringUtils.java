@@ -11,9 +11,17 @@ import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 import java.util.Objects;
 
 public class StringUtils {
+
+    public static String normalizeSearch(String input) {
+        if (input == null) return "";
+        String stripped = Normalizer.normalize(input, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return stripped.toLowerCase().replaceAll("[^a-z0-9]", "");
+    }
 
     public static String getTime(Long seconds, boolean convertDays) { //output example: 4h 23m 59s
         String s;

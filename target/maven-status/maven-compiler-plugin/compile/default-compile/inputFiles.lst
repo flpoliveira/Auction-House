@@ -11,6 +11,7 @@
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/world/npc/NPCManager.java
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/GUI/impl/ConfirmBuyGUI.java
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/data/persistentStorage/local/configs/TransactionLogger.java
+/usr/src/app/src/main/java/me/elaineqheart/auctionHouse/i18n/PtBrTranslations.java
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/data/ram/AuctionHouseStorage.java
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/AuctionHouse.java
 /usr/src/app/src/main/java/me/elaineqheart/auctionHouse/data/persistentStorage/mongoDB/RedisNoteStorage.java

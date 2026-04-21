@@ -3,6 +3,7 @@ package me.elaineqheart.auctionHouse.data.ram;
 import de.unpixelt.locale.Translate;
 import me.elaineqheart.auctionHouse.AuctionHouse;
 import me.elaineqheart.auctionHouse.data.StringUtils;
+import me.elaineqheart.auctionHouse.i18n.PtBrTranslations;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemStackConverter;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.SettingManager;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
@@ -85,13 +86,33 @@ public class ItemNote {
         ItemStack item = getItem();
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> index = new ArrayList<>(Collections.singleton(item.toString().toLowerCase()));
-        if(AuctionHouse.localeAPI) {
-            List<ItemStack> translateItems = new ArrayList<>(List.of(item));
-            if(meta != null) {
-                if (meta instanceof BundleMeta bundleMeta) translateItems.addAll(bundleMeta.getItems());
-                if (ItemManager.isShulkerBox(item)) Collections.addAll(translateItems, ((ShulkerBox) ((BlockStateMeta) meta).getBlockState()).getInventory().getContents());
-            }
 
+        List<ItemStack> translateItems = new ArrayList<>(List.of(item));
+        if(meta != null) {
+            if (meta instanceof BundleMeta bundleMeta) translateItems.addAll(bundleMeta.getItems());
+            if (ItemManager.isShulkerBox(item)) Collections.addAll(translateItems, ((ShulkerBox) ((BlockStateMeta) meta).getBlockState()).getInventory().getContents());
+        }
+
+        for (ItemStack translateItem : translateItems) {
+            if (translateItem == null) continue;
+            String ptMaterial = PtBrTranslations.getMaterial(translateItem.getType());
+            if (!ptMaterial.isEmpty()) index.add(ptMaterial.toLowerCase());
+            ItemMeta translateMeta = translateItem.getItemMeta();
+            if (translateMeta == null) continue;
+            for (Enchantment enchantment : translateMeta.getEnchants().keySet()) {
+                String ptEnchant = PtBrTranslations.getEnchantment(enchantment);
+                if (!ptEnchant.isEmpty()) index.add(ptEnchant.toLowerCase());
+            }
+            if (translateMeta instanceof PotionMeta potionMeta) {
+                PotionType type = potionMeta.getBasePotionType();
+                if (type != null) {
+                    String ptPotion = PtBrTranslations.getPotion(translateItem, type);
+                    if (!ptPotion.isEmpty()) index.add(ptPotion.toLowerCase());
+                }
+            }
+        }
+
+        if(AuctionHouse.localeAPI) {
             for (ItemStack translateItem : translateItems) {
                 if (translateItem == null) continue;
                 index.add(Translate.getMaterial(p, translateItem.getType()).toLowerCase());

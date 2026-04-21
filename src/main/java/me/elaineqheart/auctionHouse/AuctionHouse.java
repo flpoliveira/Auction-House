@@ -6,6 +6,7 @@ import me.elaineqheart.auctionHouse.GUI.other.AnvilGUIManager;
 import me.elaineqheart.auctionHouse.commands.DynamicCommandRegisterer;
 import me.elaineqheart.auctionHouse.data.persistentStorage.ItemNoteStorage;
 import me.elaineqheart.auctionHouse.data.persistentStorage.local.data.ConfigManager;
+import me.elaineqheart.auctionHouse.i18n.PtBrTranslations;
 import me.elaineqheart.auctionHouse.listeners.AhConfigurationListener;
 import me.elaineqheart.auctionHouse.listeners.PlayerJoinCollectListener;
 import me.elaineqheart.auctionHouse.world.displays.DisplayListener;
@@ -36,6 +37,7 @@ public final class AuctionHouse extends JavaPlugin {
         Plugin localeAPIPlugin = Bukkit.getPluginManager().getPlugin("Locale-API");
         if(localeAPIPlugin != null && localeAPIPlugin.isEnabled()) localeAPI = true;
         instance = this;
+        PtBrTranslations.load(this);
         guiManager = new GUIManager();
         GUIListener guiListener = new GUIListener(guiManager);
         anvilManager = new AnvilGUIManager();

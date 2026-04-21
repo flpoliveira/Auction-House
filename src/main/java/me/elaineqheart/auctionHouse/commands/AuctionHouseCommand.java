@@ -171,6 +171,20 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
                 }
 
             }
+            // /ah search <text...> - open AH filtered by text; search clears when GUI closes
+            if(strings.length >= 1 && strings[0].equals(M.getFormatted("commands.search"))) {
+                if(ConfigManager.bannedPlayers.checkIsBannedSendMessage(p)) {
+                    return true;
+                }
+                if(strings.length < 2) {
+                    p.sendMessage(M.getFormatted("command-feedback.search-usage"));
+                    return true;
+                }
+                String searchText = String.join(" ", Arrays.copyOfRange(strings, 1, strings.length));
+                AhConfiguration configuration = new AhConfiguration(0, AuctionHouseGUI.Sort.HIGHEST_PRICE, searchText, p, false);
+                AuctionHouse.getGuiManager().openGUI(new AuctionHouseGUI(configuration), p);
+                return true;
+            }
             // /ah announce - toggle announcements
             if(strings.length == 1 && SettingManager.auctionAnnouncementsEnabled && strings[0].equals(M.getFormatted("commands.announce"))) {
                 boolean newState = ConfigManager.playerPreferences.toggleAnnouncements(p);
@@ -440,6 +454,7 @@ public class AuctionHouseCommand implements CommandExecutor, TabCompleter {
             List<String> assetParams = new ArrayList<>();
             assetParams.add(M.getFormatted("commands.about"));
             assetParams.add(M.getFormatted("commands.help"));
+            assetParams.add(M.getFormatted("commands.search"));
             if(SettingManager.BINAuctions) assetParams.add(M.getFormatted("commands.sell"));
             if(SettingManager.BIDAuctions) assetParams.add(M.getFormatted("commands.bid"));
             if(SettingManager.auctionAnnouncementsEnabled) assetParams.add(M.getFormatted("commands.announce"));

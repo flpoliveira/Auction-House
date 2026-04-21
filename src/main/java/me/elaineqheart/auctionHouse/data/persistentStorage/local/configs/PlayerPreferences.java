@@ -38,7 +38,9 @@ public class PlayerPreferences extends Config {
     }
     public void loadInstance(Player p) {
         Gson gson = getGson();
-        AhConfiguration.loadInstance(p, gson.fromJson(getCustomFile().getString("players." + p.getUniqueId() + ".configuration"), AhConfiguration.class));
+        AhConfiguration c = gson.fromJson(getCustomFile().getString("players." + p.getUniqueId() + ".configuration"), AhConfiguration.class);
+        AhConfiguration.loadInstance(p, c);
+        if(c != null) c.setCurrentSearch("");
     }
     @Override
     public void setup() {

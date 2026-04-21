@@ -4,7 +4,7 @@ ah-layout:
   - '# . . . . . . . #'
   - '# . . . . . . . #'
   - '# # # # # # # # #'
-  - 's o # p r n # f m'
+  - '# o # p r n # f m'
 my-ah-layout:
   - '# # # # # # # # #'
   - '# . . . . . . . #'
@@ -20,18 +20,6 @@ my-ah-layout:
     ==: ItemMeta
     meta-type: UNSPECIFIC
     hide-tool-tip: true
-s:
-  ==: org.bukkit.inventory.ItemStack
-  DataVersion: 4325
-  id: minecraft:oak_sign
-  count: 1
-  schema_version: 1
-active-search:
-  ==: org.bukkit.inventory.ItemStack
-  DataVersion: 4325
-  id: minecraft:spruce_sign
-  count: 1
-  schema_version: 1
 o:
   ==: org.bukkit.inventory.ItemStack
   DataVersion: 4325

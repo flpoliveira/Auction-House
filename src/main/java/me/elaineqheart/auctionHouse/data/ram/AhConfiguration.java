@@ -77,11 +77,12 @@ public class AhConfiguration {
     
     public AhConfiguration clone() {
         try {
-            return  (AhConfiguration) super.clone();
+            AhConfiguration cloned = (AhConfiguration) super.clone();
+            cloned.currentSearch = null;
+            return cloned;
         } catch (CloneNotSupportedException e) {
             AhConfiguration configuration = new AhConfiguration();
             configuration.currentSort = currentSort;
-            configuration.currentSearch = currentSearch;
             configuration.whitelistLetter = whitelistLetter;
             if(binFilter != BINFilter.ALL )configuration.binFilter = binFilter;
             return configuration;
